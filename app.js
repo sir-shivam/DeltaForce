@@ -1,12 +1,19 @@
 console.log("started");
-// function renderBoard() {
-//     const boardElement = document.querySelector(".board");
-//     boardElement.innerHTML = ''; // Clear existing content
-//     // renderBoard(); // Initial rende
-// }
-// renderBoard(); // Initial render;
+let check = false;
 let box=document.querySelectorAll(".box")
 let Tbox;
+let nextMove= (e)=>{
+Array.from(box).forEach((button) => {
+    if (!check){
+    button.addEventListener("click", (ee)=>{
+        ee.target.appendChild(e);
+        e.classList.remove("active");
+        console.log(ee.target.className);
+        console.log(e.className);
+        check=true;
+        box.removeEventListener("click");
+    })}
+})}
 
 let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 let square=[];
@@ -22,24 +29,11 @@ box64.appendChild(square[4]);
 box60.appendChild(square[0]);
 
 
-const nextMove = ()=>{
-    let Nbox = document.getElementById(`${Tbox}`);
-        Nbox.appendChild(square[2]);}
-// Array.from(square).forEach((button) => {
-//     button.addEventListener("click", (e) => {
 
-//     }
-// })
 
-square[2].addEventListener("click", ()=>{
-    console.log("clicked on a piece");
-    square[2].classList.add("active");
-    Array.from(box).forEach((button) => {
-        for(let i=1 ; i!= 0 ; i--){
-        button.addEventListener("click", (e)=>{
-            e.target.appendChild(square[2]);
-            square[2].classList.remove("active");
-        })}
-    })
-    
-})
+Array.from(square).forEach((sq) =>{
+  sq.addEventListener("click", (e)=>{
+    console.log(e.target.className);
+    e.target.classList.add("active");
+    nextMove(e.target);
+})})
