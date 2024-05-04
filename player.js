@@ -1,5 +1,8 @@
 export default class Player{
-    constructor(name){
-        this.name=name;
+    constructor(color , position_box){
+        this.color= color ;
+        this.position_box=position_box;
     }
+
+    
 }

@@ -34,3 +34,17 @@ body{
     background-color: aliceblue;
 }
 
+.Titan ,.Tank , .Cannon{
+    height: 100%;
+    width: 100%;
+    background-color: aqua;
+}
+.Ricochets{
+    width: 100%; /* Set desired width */
+  height: 100%; /* Set desired height */
+  background-image:
+    linear-gradient(to bottom left, transparent 50%, red 50%),
+    linear-gradient(to top right, red 50%, transparent 50%);
+  /* background-repeat: no-repeat; */
+}
+
