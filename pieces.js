@@ -1,7 +1,7 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"]
-export let player=[5,4,10,12,9,60,52,64,55,57]
+export let player=[55,10,44,12,4,51,52,50,54,64]
 export let square=[];
 
 
@@ -19,6 +19,6 @@ for (let  i = 0; i < arr.length; i++) {
 }
 
 for(let i=0 ; i<arr.length ; i++){
-    let box1 = document.querySelector(`#box${player[i]}`);
-    box1.appendChild(square[i]);
+    let boxes = document.querySelector(`#box${player[i]}`);
+    boxes.appendChild(square[i]);
 }
