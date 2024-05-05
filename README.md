@@ -11,7 +11,8 @@
  1) board--------------------------------------(done)
  2) pieces-------------------------------------(done)
  3) rules--------------------------------------(done)
- 4) considerable move--------------------------(in -progress)
- 5) Next move
- 6) bullet
- 7) Winner
+ 4) considerable move--------------------------(done)
+ 5) Next move----------------------------------(done)
+ 6) playerTurn-------------------------------------(in-progress)
+ 7) bullet-------------------------------------(in-progress)
+ 8) Winner

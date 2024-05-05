@@ -1,4 +1,6 @@
 import { color } from "./pieces.js";
+import { lastSelect } from "./app.js";
+import { unSelect } from "./app.js";
 
 export let positions=[];
 let b_post = [1,-1,8,7,9];
@@ -15,8 +17,13 @@ function showStep() {
 }
 
 function nextMove(){
-    
+    console.log(this);   //clicked position
+    console.log(lastSelect[0]);
+    let child= document.querySelector(`.${lastSelect[0]}`);
+    this.appendChild(child);
+    unSelect();
 }
+
 
 export function Undo(){
     for(let i =0 ; i<positions.length ; i++){
@@ -32,6 +39,17 @@ export function Undo(){
 function rotate() {
     console.log("rotate");
     (document.querySelector(".rotate")).style.display= "block";
+    (document.querySelector(".left")).addEventListener("click", action);
+    (document.querySelector(".right")).addEventListener("click",action);
+
+}
+
+function action (){
+    console.log(this.className);
+    let last= document.querySelector(`.${lastSelect[0]}`);
+    last.style.transform="rotate(90deg)";
+
+    unSelect();
 }
 
 export function ruleMove (element) {

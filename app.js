@@ -7,7 +7,7 @@ export let lastSelect;
 let box=document.querySelectorAll(".box");
 
 
-const unSelect = () =>{
+export const unSelect = () =>{
   let prev = document.querySelector(`.${lastSelect[0]}`);
   prev.classList.remove("active");
   Undo();
@@ -23,8 +23,8 @@ Array.from(square).forEach((sq) =>{
     clicked=true;
     lastSelect=`${e.target.className}`;
     lastSelect= lastSelect.split(" ");
-    lastSelect[0];
-    console.log(lastSelect);
+    // lastSelect[0];
+    console.log(lastSelect);                  //lasselect contains the target class
     e.target.classList.add("active");
     ruleMove(lastSelect);
 })})
