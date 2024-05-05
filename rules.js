@@ -1,6 +1,9 @@
 import { color } from "./pieces.js";
 import { lastSelect } from "./app.js";
 import { unSelect } from "./app.js";
+import { Shooting } from "./bullet.js";
+import { transform } from "./app.js";
+
 
 export let positions=[];
 let b_post = [1,-1,8,7,9];
@@ -11,7 +14,7 @@ function showStep() {
         if((document.getElementById(positions[i]))!=null){    
             let act_box = ((document.getElementById(positions[i])))
             act_box.style.backgroundColor= "#C7F6C7";
-            act_box.addEventListener("click" , nextMove );   
+            act_box.addEventListener("click" , nextMove );   // on click on the highlited box it will call nextMove 
         }
     }
 }
@@ -21,7 +24,9 @@ function nextMove(){
     console.log(lastSelect[0]);
     let child= document.querySelector(`.${lastSelect[0]}`);
     this.appendChild(child);
+    Shooting();
     unSelect();
+    transform();
 }
 
 
@@ -48,10 +53,11 @@ function action (){
     console.log(this.className);
     let last= document.querySelector(`.${lastSelect[0]}`);
     last.style.transform="rotate(90deg)";
-
+    Shooting();
     unSelect();
 }
 
+//this fuction is called from app.js to show rule and posible move
 export function ruleMove (element) {
     if(element[1]=== "Titan" || element[1]=== "Tank" || element[1]=== "Ricochets" || element[1]=== "SemiRicochets" || element[1]=== "Cannon" ) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
@@ -72,7 +78,7 @@ export function ruleMove (element) {
             positions[i]=`box`+`${positions[i]}`;
             console.log(positions[i]);
         }
-        showStep();
+        showStep(); // calling showstep funtion to highlet positions
         if( element[1]=== "Ricochets" || element[1]=== "SemiRicochets"  ){
             rotate();
         }
