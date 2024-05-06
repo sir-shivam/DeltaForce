@@ -1,11 +1,9 @@
-// import { square } from "./pieces.js";
-// console.log(square);
-// let shouter = square[9].className;
-// shouter= shouter.split(" ");
-// console.log(shouter);
-let container ;
-let movement;
-console.log(container , "hiii");
+export let movement;
+import { interval2 } from "./collission.js";
+let container;
+export let interval;
+// console.log(container , "hiii");
+import { checkCollision } from "./collission.js";
 
 const bulletSpeed = 5; 
 let intervalId;
@@ -36,8 +34,6 @@ function createBullet(Turn1) {
         movement="up";
     }
 
-    // bullet.style.left = container.offsetLeft + container.offsetWidth / 2 + "px"; 
-
     container.appendChild(bullet);
 
     return bullet;
@@ -45,29 +41,31 @@ function createBullet(Turn1) {
 
 function moveBullet(bullet) {
     console.log("end bullet");
-    const interval = setInterval(() => {
+    checkCollision(bullet);
+        interval = setInterval(() => {
         const currentTop = parseInt(bullet.style.top);
-        console.log(currentTop , "top");
+        // console.log(currentTop , "top");
         if(movement==="down"){
             bullet.style.top = (currentTop + bulletSpeed) + "px";
             // Checking if bullet goes off-screen and remove it
-        if (currentTop === 746 || currentTop === 749 || currentTop === 748 ) {
+        if (currentTop > 742 ) {
             clearInterval(interval);
+            clearInterval(interval2);
             container.removeChild(bullet);
         }
         }
         else{
             bullet.style.top = (currentTop - bulletSpeed) + "px";
+
             // Checking if bullet goes off-screen and remove it
-        if (currentTop === 57) {
+        if (currentTop < 58) {
             clearInterval(interval);
+            clearInterval(interval2);
             container.removeChild(bullet);
         }
         }
-
-
+        }, 10);                     // Moveing bullet every 10 milliseconds
         
-    }, 10); // Move the bullet every 10 milliseconds
 }
 
 export function Shooting(Turn1) {
