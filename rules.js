@@ -4,11 +4,11 @@ import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
 import { delPlay } from "./app.js";
-let Turn1;
 
 
 export let positions=[];
-let b_post = [1,-1,8,7,9];
+let b_post;
+let Turn1;
 
 
 //this fuction is called from app.js to show rule and posible move
@@ -17,56 +17,63 @@ export function ruleMove (element , Turn) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
         parentId=parentId.slice(3,6);
         console.log(parentId);
-        let j;
-        if(element[1]=== "Cannon"){
-            j=2
+        if(parentId%8 === 0){
+            b_post=[8,-1 , 7 , -8 ,-9];
+        }
+        else if (parentId%8 === 1){
+            b_post=[1,-8 ,-7 , 8 ,9];
         }
         else{
-            j=5;
+            b_post= [1,-1,8,7,9,-8,-7,-9];
         }
-        for(let i=0 ; i<j ; i++){
-            if(element[0].includes(color[1])){
-            positions[i]= parseInt(parentId) + b_post[i];
+       
+        for(let i=0 ; i<8 ; i++){
+            if(element[1] === "Cannon"){
+                if(element[0].includes(color[0])){
+                    positions[i]= 57+i;  
+                }
+                else{
+                    positions[i]= 1+i; 
+                }
             }
-            else{ positions[i]= parseInt(parentId) - b_post[i];}
+            else{
+            positions[i]= parseInt(parentId) + b_post[i];}
             positions[i]=`box`+`${positions[i]}`;
-            console.log(positions[i]);
         }
+
+        
         showStep(Turn); // calling showstep funtion to highlet positions
+        console.log("show act");
         if( element[1]=== "Ricochets" || element[1]=== "SemiRicochets"  ){
             rotate();
-        }
+        }  
     }
 }
-
-
 
 //to highlight next step
 function showStep(Turn) {
     Turn1=Turn;
     for(let i =0 ; i<positions.length ; i++){                //posiontions is array of all posible steps
         if((document.getElementById(positions[i]))!=null){    
-            let act_box = ((document.getElementById(positions[i])))
+            let act_box = ((document.getElementById(positions[i])));
             act_box.style.backgroundColor= "#C7F6C7";
-            act_box.addEventListener("click" , nextMove );   // on click on the highlited box it will call nextMove 
+            if(!act_box.hasChildNodes()){
+            act_box.addEventListener("click" , nextMove ); }  // on click on the highlited box it will call nextMove 
         }
     }
 }
 
-
 function nextMove(){
-    console.log(this);   //clicked position
+    console.log(this);                       //clicked position
     console.log(lastSelect[0]);
     let child= document.querySelector(`.${lastSelect[0]}`);
     this.appendChild(child);
     Shooting(Turn1);
     unSelect();
     transform();
+    // delPlay();
     
 }
-
-
-
 
 export function Undo(){
     for(let i =0 ; i<positions.length ; i++){
@@ -85,7 +92,6 @@ function rotate() {
     (document.querySelector(".rotate")).style.display= "block";
     (document.querySelector(".left")).addEventListener("click", action);
     (document.querySelector(".right")).addEventListener("click",action);
-
 }
 
 function action (){
@@ -95,4 +101,3 @@ function action (){
     Shooting();
     unSelect();
 }
-

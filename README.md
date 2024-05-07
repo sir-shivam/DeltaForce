@@ -4,7 +4,7 @@
 
 
 # live website==>
- '(https://sir-shivam.github.io/DeltaForce/)'
+ 'https://sir-shivam.github.io/DeltaForce/'
 
 
  steps:
@@ -13,7 +13,10 @@
  3) rules--------------------------------------(done)
  4) considerable move--------------------------(done)
  5) Next move----------------------------------(done)
- 6) playerTurn-------------------------------------(done)
+ 6) playerTurn---------------------------------(done)
  7) bullet-------------------------------------(done)
- 7) bullet detection-------------------------------------(in progress)
- 8) Winner
+ 8) bullet detection---------------------------(done)
+ 9) bullet detection and object obstacles -----(done)
+ 10) change of path ---------------------------(in .....progress)
+10) Bugssss -----------------------------------(no bug as of now)
+11) Winner
