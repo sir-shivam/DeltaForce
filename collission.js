@@ -1,6 +1,6 @@
-import { interval } from "./bullet.js";
+
 import { movement } from "./bullet.js";
-import { interval3 } from "./obstacles.js";
+import { interval3, interval4, interval5 } from "./obstacles.js";
 // import { comparing } from "./direction.js";
 export let interval2;
 let Titan;
@@ -36,12 +36,14 @@ function checkHit(bullet) {
 
 export  function checkCollision(bullet) {
     interval2 = setInterval( () => {
+      // console.log("titan checking");
   if (checkHit(bullet)) {
     clearInterval(interval2);
     clearInterval(interval3);
-    clearInterval(interval);
+    clearInterval(interval5);
+    clearInterval(interval4);
     bullet.parentNode.removeChild(bullet); 
-    console.log("Collision detected!"); 
+    // console.log("Collision detected!"); 
   }
 }, 10);
 }

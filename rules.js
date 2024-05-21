@@ -1,5 +1,5 @@
 import { color } from "./pieces.js";
-import { lastSelect } from "./app.js";
+import { lastSelect, play } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -9,14 +9,14 @@ import { delPlay } from "./app.js";
 export let positions=[];
 let b_post;
 let Turn1;
-
+let val = 0;
 
 //this fuction is called from app.js to show rule and posible move
 export function ruleMove (element , Turn) {
     if(element[1]=== "Titan" || element[1]=== "Tank" || element[1]=== "Ricochets" || element[1]=== "SemiRicochets" || element[1]=== "Cannon" ) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
         parentId=parentId.slice(3,6);
-        console.log(parentId);
+        // console.log(parentId);
         if(parentId%8 === 0){
             b_post=[8,-1 , 7 , -8 ,-9];
         }
@@ -24,7 +24,7 @@ export function ruleMove (element , Turn) {
             b_post=[1,-8 ,-7 , 8 ,9];
         }
         else{
-            b_post= [1,-1,8,7,9,-8,-7,-9];
+            b_post= [1,9,-7,8,-8,7,-1,-9];
         }
        
         for(let i=0 ; i<8 ; i++){
@@ -43,7 +43,7 @@ export function ruleMove (element , Turn) {
 
         
         showStep(Turn); // calling showstep funtion to highlet positions
-        console.log("show act");
+        // console.log("show act");
         if( element[1]=== "Ricochets" || element[1]=== "SemiRicochets"  ){
             rotate();
         }  
@@ -64,14 +64,14 @@ function showStep(Turn) {
 }
 
 function nextMove(){
-    console.log(this);                       //clicked position
-    console.log(lastSelect[0]);
+    // console.log(this);                       //clicked position
+    // console.log(lastSelect[0]);
     let child= document.querySelector(`.${lastSelect[0]}`);
     this.appendChild(child);
     Shooting(Turn1);
     unSelect();
-    transform();
-    // delPlay();
+    // transform();
+    delPlay();
     
 }
 
@@ -88,16 +88,19 @@ export function Undo(){
 } 
 
 function rotate() {
-    console.log("rotate");
+    // // console.log("rotate");
     (document.querySelector(".rotate")).style.display= "block";
     (document.querySelector(".left")).addEventListener("click", action);
     (document.querySelector(".right")).addEventListener("click",action);
 }
 
 function action (){
-    console.log(this.className);
+    // console.log(this.className);
     let last= document.querySelector(`.${lastSelect[0]}`);
-    last.style.transform="rotate(90deg)";
+    val = val +90;
+    last.style.transform=`rotate(${val}deg)`;
     Shooting();
     unSelect();
+    // play();
+    // transform();
 }

@@ -1,11 +1,10 @@
 import { interval2 } from "./collission.js";
 import { checkCollision } from "./collission.js";
-import { comparing, interval3 } from "./obstacles.js";
+import { boundary, comparing, moveDirection } from "./obstacles.js";
 
 export let movement;
-export let interval;
 let container;
-const bulletSpeed = 5; 
+export const bulletSpeed = 5; 
 
 
 // creating bullet as element
@@ -20,14 +19,14 @@ function createBullet(Turn1) {
     bullet.classList.add("bullet"); 
     bullet.style.position = "absolute"; 
     if(!Turn1){
-        const containerHeight = container.offsetHeight;
+        const containerHeight = container.offsetHeight ;
         bullet.style.top = container.offsetTop + containerHeight + "px";
         bullet.style.left = container.offsetLeft + container.offsetWidth / 2 + "px";
         movement= "down";
 
     }
     else{
-        bullet.style.top = container.offsetTop  + "px";
+        bullet.style.top = container.offsetTop + 30 + "px";
         bullet.style.left = container.offsetLeft + container.offsetWidth / 2 + "px";
         movement="up";
     }
@@ -38,38 +37,21 @@ function createBullet(Turn1) {
 }
 
 function moveBullet(bullet) {
-    console.log("end bullet");
+    // console.log("end bullet");
+    // if(movement==="down"){
+    //     moveDown(bullet);
+    // }
+    // else{
+    //     moveUp(bullet);
+    // }
+    moveDirection(bullet);
     checkCollision(bullet);
     comparing(bullet);
-        interval = setInterval(() => {
-        const currentTop = parseInt(bullet.style.top);
-        if(movement==="down"){
-            bullet.style.top = (currentTop + bulletSpeed) + "px";
-        if (currentTop > 742 ) {
-            clearInterval(interval);
-            clearInterval(interval2);
-            clearInterval(interval3);
-            container.removeChild(bullet);
-        }
-        }
-        
-        else{
-            bullet.style.top = (currentTop - bulletSpeed) + "px";
-
-            // Checking if bullet goes off-screen and remove it
-        if (currentTop < 58) {
-            clearInterval(interval);
-            clearInterval(interval2);
-            clearInterval(interval3);
-            container.removeChild(bullet);
-        }
-        }
-        }, 10);                     // Moveing bullet every 10 milliseconds
-        
+    boundary(bullet); 
 }
 
 export function Shooting(Turn1) {
-    console.log("in bullet");
+    // console.log("in bullet");
         const newBullet = createBullet(Turn1);
         moveBullet(newBullet);
 }

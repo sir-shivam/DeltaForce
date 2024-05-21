@@ -46,10 +46,12 @@ body{
 .Ricochets , .SemiRicochets{
     width: 100%; 
   height: 100%; 
+  transform: rotate(360deg);
   background-image:
     linear-gradient(to bottom left, transparent 50%, red 50%),
     linear-gradient(to top right, red 50%, transparent 50%);
     border-radius: 5px;
+    position: relative;
  
 }
 
@@ -86,6 +88,51 @@ body{
     width: 10px;
     height: 10px;
     background-color: green;
-    border-radius: 50%; 
+    /* border-radius: 50%;  */
     position: absolute; 
+  }
+#box1 {
+    position: relative;
+    /* transform: rotate(20deg); */
+  }
+
+  .detector{
+      width: 2px;
+      height: 60px;
+      position: absolute;
+      border: 2px solid blue;
+      visibility: hidden;
+      
+    }
+
+  #left{
+    margin-left: -20%;
+    /* display: none; */
+  }  
+  #right{
+    /* border: 2px solid blue; */
+    margin-left: 120%;
+    margin-top: -20px;
+  }
+
+  #top{
+    width: 50px;
+      height: 2px;
+      margin-left: 10px;
+    margin-top:-60%;
+  }
+  #bottom{
+    width: 50px;
+      height: 2px;
+      margin-left: 10px;
+
+    /* border: 2px solid blue; */
+    margin-top: 100%;
+  }
+  .extra {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border: 2px solid blue;
+    margin-top: 200px;
   }

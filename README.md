@@ -18,5 +18,5 @@
  8) bullet detection---------------------------(done)
  9) bullet detection and object obstacles -----(done)
  10) change of path ---------------------------(in .....progress)
-10) Bugssss -----------------------------------(no bug as of now)
-11) Winner
+11) Bugssss -----------------------------------(no bug as of now)
+12) Winner
