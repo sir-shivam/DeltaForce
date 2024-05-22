@@ -1,6 +1,7 @@
+import { moveDirection } from "./app.js";
 import { interval2 } from "./collission.js";
 import { checkCollision } from "./collission.js";
-import { boundary, comparing, moveDirection } from "./obstacles.js";
+import { boundary, comparing } from "./app.js";
 
 export let movement;
 let container;
@@ -26,7 +27,7 @@ function createBullet(Turn1) {
 
     }
     else{
-        bullet.style.top = container.offsetTop + 30 + "px";
+        bullet.style.top = container.offsetTop  + "px";
         bullet.style.left = container.offsetLeft + container.offsetWidth / 2 + "px";
         movement="up";
     }
@@ -37,13 +38,6 @@ function createBullet(Turn1) {
 }
 
 function moveBullet(bullet) {
-    // console.log("end bullet");
-    // if(movement==="down"){
-    //     moveDown(bullet);
-    // }
-    // else{
-    //     moveUp(bullet);
-    // }
     moveDirection(bullet);
     checkCollision(bullet);
     comparing(bullet);
@@ -51,7 +45,6 @@ function moveBullet(bullet) {
 }
 
 export function Shooting(Turn1) {
-    // console.log("in bullet");
         const newBullet = createBullet(Turn1);
         moveBullet(newBullet);
 }

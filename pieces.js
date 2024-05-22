@@ -1,7 +1,7 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"];
-export let player=[8,58,1,3,4,57,23,27,32,64];
+export let player=[57,58,1,3,4,32,23,27,28,60];
 export let square=[];
 export let pieces=[];
 export let detector=[];
@@ -15,7 +15,6 @@ for (let  i = 0; i < arr.length; i++) {
     pieces[i]=(`${arr[i]}_${color[j]}`);
     square[i].classList.add(arr[i]);
     square[i].style.backgroundColor=`${color[j]}`;
-    // console.log(color[j]);
     square[i].innerText= arr[i];
     
 }

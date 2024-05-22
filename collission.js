@@ -1,10 +1,10 @@
 
+import { delPlay, interval4, play, transform } from "./app.js";
 import { movement } from "./bullet.js";
-import { interval3, interval4, interval5 } from "./obstacles.js";
+import { interval3, interval5 } from "./app.js";
 // import { comparing } from "./direction.js";
 export let interval2;
 let Titan;
-
 
 function checkHit(bullet) {
   if (movement!="down"){
@@ -21,12 +21,15 @@ function checkHit(bullet) {
     return (
       bulletInfo.top < TitanInfo.bottom && 
       bulletInfo.right > TitanInfo.left &&   
+      bulletInfo.bottom > TitanInfo.top &&   
       bulletInfo.left < TitanInfo.right     
     );
   }
+
   else{
     return(
-      bulletInfo.top > TitanInfo.top && 
+      bulletInfo.top > TitanInfo.top &&
+      bulletInfo.bottom > TitanInfo.top &&
       bulletInfo.right > TitanInfo.left &&   
       bulletInfo.left < TitanInfo.right 
     )
@@ -43,7 +46,10 @@ export  function checkCollision(bullet) {
     clearInterval(interval5);
     clearInterval(interval4);
     bullet.parentNode.removeChild(bullet); 
-    // console.log("Collision detected!"); 
+    delPlay();
+    transform();
+    alert("game over");
+
   }
 }, 10);
 }
