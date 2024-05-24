@@ -1,10 +1,11 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"];
-export let player=[57,58,1,3,4,32,23,27,28,60];
+export let player=[32,58,1,3,4,60,23,27,28,57];
 export let square=[];
 export let pieces=[];
 export let detector=[];
+
 
 for (let  i = 0; i < arr.length; i++) {
     let j;
@@ -44,3 +45,11 @@ for(let j=0 ,i=0 ; i<arr.length ; i++){
             square[i].appendChild(detector[j++]);
         }
     }
+
+    // reset function
+    let reset = document.querySelector(".reset");
+    reset.addEventListener("click", reseting);
+    
+export function reseting(){
+        window.location.reload(true);
+}

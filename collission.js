@@ -17,24 +17,12 @@ function checkHit(bullet) {
     const bulletInfo = bullet.getBoundingClientRect();
   
     // Check if bullet rectangle overlaps with enemy rectangle
-    if(movement!="down"){
     return (
       bulletInfo.top < TitanInfo.bottom && 
       bulletInfo.right > TitanInfo.left &&   
       bulletInfo.bottom > TitanInfo.top &&   
       bulletInfo.left < TitanInfo.right     
     );
-  }
-
-  else{
-    return(
-      bulletInfo.top > TitanInfo.top &&
-      bulletInfo.bottom > TitanInfo.top &&
-      bulletInfo.right > TitanInfo.left &&   
-      bulletInfo.left < TitanInfo.right 
-    )
-
-  }
   }
 
 export  function checkCollision(bullet) {

@@ -1,5 +1,5 @@
 import { ruleMove } from "./rules.js";
-import { player, square } from "./pieces.js";
+import { color, player, square } from "./pieces.js";
 import { Undo } from "./rules.js";
 import { bulletSpeed } from "./bullet.js";
 import { checkCollision, interval2 } from "./collission.js";
@@ -7,11 +7,16 @@ import { detector, pieces } from "./pieces.js";
 //   "Titan_blue"   ,"Tank_blue"  ,"Ricochets_blue"  ,"SemiRicochets_blue"  ,"Cannon_blue"  ,"Titan_pink"  ,"Tank_pink"  ,"Ricochets_pink"  ,"SemiRicochets_pink"  ,"Cannon_pink"
 export let interval3;
 export let lastSelect;
+export let col=false;
+export let interval7;
+export let intervaal8,interval9;
+
 export let interval5;
 export let interval6;
 export let Turn = true ;
 export let path_i= 0;
 export let interval4;
+export let clock=document.querySelector(".clock");
 let Rico = [];
 let RicoInfo = [];
 let bullInfo;
@@ -35,6 +40,7 @@ if(Turn){
   bullet_move ="down";
   console.log(bullet_move);
   path_i=0;
+  document.querySelector(".space").innerHTML=color[1];
   play();
 }
 
@@ -45,8 +51,10 @@ else{
   bullet_move="up";
   console.log(bullet_move);
   path_i=0;
+  document.querySelector(".space").innerHTML=color[0];
   play();
 }
+counting();
 }
 
 export function play(){
@@ -82,6 +90,7 @@ export const unSelect = () =>{
   }
 
 play();
+counting(); 
 
 
 
@@ -127,7 +136,6 @@ export function comparing (bullet){
             console.log(bullet.style.top);
             bullet.style.top = (RicoInfo[i].top + RicoInfo[i].bottom) /2 -10+ "px";
             bullet.style.left = (RicoInfo[i].left + RicoInfo[i].right ) /2 -5 +"px";
-            
             moveDirection(bullet);
             break; 
             }
@@ -139,10 +147,11 @@ export function comparing (bullet){
             console.log(Rico[i]); 
             console.log(bullet.style.top);
             clearInterval(interval3);
-            // clearInterval(interval2);
+            clearInterval(interval2);
             clearInterval(interval5);
             clearInterval(interval4);
             clearInterval(interval6);
+            clearInterval(interval7);
             bullet.parentNode.removeChild(bullet);
             transform();
             break;
@@ -208,13 +217,15 @@ export function moveDirection (bullet){
     }
 
 export function boundary(bullet){
+  let board=document.querySelector(".board").getBoundingClientRect();
     interval5=setInterval(()=>{
          let bulletBound = bullet.getBoundingClientRect();
-    if (bulletBound.top<64 || bulletBound.top > 755 ||bulletBound.left <280 || bulletBound.left >935 ) {
+    if (bulletBound.top<board.top || bulletBound.top > board.bottom ||bulletBound.left <board.left || bulletBound.left >board.right) {
             clearInterval(interval2);
             clearInterval(interval3);
             clearInterval(interval4);
             clearInterval(interval5);
+            clearInterval(interval7);
 
         console.log("out of box");
         bullet.parentNode.removeChild(bullet); 
@@ -223,3 +234,84 @@ export function boundary(bullet){
     }
 },10);
 }
+
+// creating slide
+let line = document.querySelector(".three_lines");
+let threeActive= false;
+line.addEventListener("click", ()=>{
+  let slide= document.querySelector(".slide");
+  if(threeActive){
+    line.style.backgroundColor = "initial";
+    // line hover to apply
+    slide.style.marginLeft="-740%";
+    slide.style.display="none";
+    threeActive = false; 
+  }
+  else {
+    line.style.backgroundColor = "slategray"
+    slide.style.marginLeft="-40%";
+    slide.style.display="block";
+    threeActive = true; 
+  // slide.style.transition = "display 2s ease-out"
+  }
+})
+
+// timer
+
+export function counting(){
+  clearInterval(intervaal8);
+  clearInterval(interval9);
+  intervaal8 = setInterval(() => {
+    if(col){
+      col=false;
+      clock.style.color="white";
+      clock.style.border="4px solid white"
+    }
+  }, 500);
+  interval9 =setInterval(() => {
+    console.log("changing");
+    if(!Turn){
+    col=true;
+    clock.style.border=`4px solid ${color[1]}`
+    clock.style.color=color[1];
+  }
+    else{
+      col=true;
+      clock.style.color=color[0];
+    clock.style.border=`4px solid ${color[0]}`
+    }
+}, 1000);
+// clock=document.querySelector(".clock");
+interval7 = setInterval(()=>{
+  let time = clock.innerHTML;
+  time=parseInt(time)-1;
+  if(time<0){
+    clearInterval(interval7);
+    clock.innerHTML=time;
+    alert("other party wins");
+    time=20;
+    clock.innerHTML=time;
+  }
+  else{
+    clock.innerHTML=time;
+  }
+}, 1000);
+}
+
+// pause function 
+let pause = document.querySelector(".pause");
+let pauseActive = false;
+pause.addEventListener("click" , ()=> {
+  if(!pauseActive){
+    pauseActive=true;
+    clearInterval(interval7);
+    pause.innerHTML="Play";
+  }
+  else{
+    pauseActive=false;
+    clearInterval(interval7);
+    pause.innerText="Pause";
+    counting();
+  }
+})
+

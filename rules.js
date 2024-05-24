@@ -1,5 +1,5 @@
 import { color } from "./pieces.js";
-import { lastSelect, play } from "./app.js";
+import { clock, interval7, lastSelect, play } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -60,6 +60,8 @@ function showStep(Turn) {
 }
 
 function nextMove(){
+    clearInterval(interval7);
+    clock.innerHTML="20";
     let child= document.querySelector(`.${lastSelect[0]}`);
     this.appendChild(child);
     Shooting(Turn1);
