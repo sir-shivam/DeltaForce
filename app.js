@@ -76,7 +76,6 @@ function ahead (e){
   ruleMove(lastSelect ,Turn);
 }
 
-
 export function delPlay(){
   Array.from(squareTurn).forEach((sq) =>{
     sq.removeEventListener("click", ahead )})
@@ -91,9 +90,6 @@ export const unSelect = () =>{
 
 play();
 counting(); 
-
-
-
 
 export function comparing (bullet){
     ricoPosition();
@@ -266,6 +262,8 @@ export function counting(){
       col=false;
       clock.style.color="white";
       clock.style.border="4px solid white"
+      document.querySelector(".space").style.color  ="white";
+    document.querySelector(".space").style.border=`2px solid white`;
     }
   }, 500);
   interval9 =setInterval(() => {
@@ -274,11 +272,15 @@ export function counting(){
     col=true;
     clock.style.border=`4px solid ${color[1]}`
     clock.style.color=color[1];
+    document.querySelector(".space").style.color=color[1];
+    document.querySelector(".space").style.border=`2px solid ${color[1]}`;
   }
     else{
       col=true;
       clock.style.color=color[0];
-    clock.style.border=`4px solid ${color[0]}`
+    clock.style.border=`4px solid ${color[0]}`;
+    document.querySelector(".space").style.color=color[0];
+    document.querySelector(".space").style.border=`2px solid ${color[0]}`;
     }
 }, 1000);
 // clock=document.querySelector(".clock");

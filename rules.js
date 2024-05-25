@@ -1,5 +1,5 @@
-import { color } from "./pieces.js";
-import { clock, interval7, lastSelect, play } from "./app.js";
+import { color, pieces } from "./pieces.js";
+import { clock, intervaal8, interval7, interval9, lastSelect, play } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -7,6 +7,10 @@ import { delPlay } from "./app.js";
 
 
 export let positions=[];
+let boxId=[];
+let pieceId=[];
+let k=0;
+let childParent=[];
 let b_post;
 let Turn1;
 let val = 0;
@@ -15,6 +19,7 @@ let val = 0;
 export function ruleMove (element , Turn) {
     if(element[1]=== "Titan" || element[1]=== "Tank" || element[1]=== "Ricochets" || element[1]=== "SemiRicochets" || element[1]=== "Cannon" ) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
+        boxId[k] = parentId;
         parentId=parentId.slice(3,6);
         if(parentId%8 === 0){
             b_post=[8,-1 , 7 , -8 ,-9];
@@ -60,6 +65,7 @@ function showStep(Turn) {
 }
 
 function nextMove(){
+    pieceId[k++]=lastSelect[0];
     clearInterval(interval7);
     clock.innerHTML="20";
     let child= document.querySelector(`.${lastSelect[0]}`);
@@ -93,4 +99,33 @@ function action (){
     unSelect();
     // play();
     // transform();
+}
+
+let Un = document.querySelector(".undo");
+let Rd = document.querySelector(".redo");
+Un.addEventListener("click",UndoMain);
+Rd.addEventListener("click",RedoMain);
+
+function UndoMain() {
+    if(k>0){
+    let child= document.querySelector(`.${pieceId[--k]}`);
+    childParent[k] = child.parentElement.id;
+    (document.querySelector(`#${boxId[k]}`)).appendChild(child);
+    clock.innerHTML="20";
+    clearInterval(intervaal8);
+    clearInterval(interval9);
+    clearInterval(interval7);
+    delPlay();
+    transform();}
+}
+function RedoMain() {
+    if(childParent[k]!=null ){
+    let child= document.querySelector(`.${pieceId[k]}`);
+    (document.querySelector(`#${childParent[k++]}`)).appendChild(child);
+  clearInterval(intervaal8);
+  clearInterval(interval9);
+  clearInterval(interval7);
+  clock.innerHTML="20";
+  delPlay();
+    transform();}
 }
