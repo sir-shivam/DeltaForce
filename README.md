@@ -17,6 +17,8 @@
  7) bullet-------------------------------------(done)
  8) bullet detection---------------------------(done)
  9) bullet detection and object obstacles -----(done)
- 10) change of path ---------------------------(in .....progress)
+ 10) change of path ---------------------------(done)
 11) Bugssss -----------------------------------(no bug as of now)
-12) Winner
+12) Winner ------------------------------------(done )
+13) normal mode completed ---------------------(done)
+14) hacker mode -------------------------------(working on ....)

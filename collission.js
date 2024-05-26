@@ -2,6 +2,7 @@
 import { delPlay, interval4, play, transform } from "./app.js";
 import { movement } from "./bullet.js";
 import { interval3, interval5 } from "./app.js";
+import { hitted } from "./pieces.js";
 // import { comparing } from "./direction.js";
 export let interval2;
 let Titan;
@@ -33,6 +34,7 @@ export  function checkCollision(bullet) {
     clearInterval(interval3);
     clearInterval(interval5);
     clearInterval(interval4);
+    hitted();
     bullet.parentNode.removeChild(bullet); 
     delPlay();
     transform();

@@ -1,5 +1,5 @@
-import { color, pieces } from "./pieces.js";
-import { clock, intervaal8, interval7, interval9, lastSelect, play } from "./app.js";
+import { color, pieces, playerMoving, revolve } from "./pieces.js";
+import { checkPause, clock, intervaal8, interval7, interval9, lastSelect, pauseActive, play } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -16,7 +16,7 @@ let Turn1;
 let val = 0;
 
 //called from app.js to show rule and posible move
-export function ruleMove (element , Turn) {
+export function ruleMove (element , Turn ,e) {
     if(element[1]=== "Titan" || element[1]=== "Tank" || element[1]=== "Ricochets" || element[1]=== "SemiRicochets" || element[1]=== "Cannon" ) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
         boxId[k] = parentId;
@@ -46,6 +46,8 @@ export function ruleMove (element , Turn) {
         }
         showStep(Turn);
         if( element[1]=== "Ricochets" || element[1]=== "SemiRicochets"  ){
+            document.querySelector(`.${element[0]}`).appendChild(revolve);
+            console.log("appppppending");
             rotate();
         }  
     }
@@ -65,6 +67,8 @@ function showStep(Turn) {
 }
 
 function nextMove(){
+    checkPause();
+    playerMoving();
     pieceId[k++]=lastSelect[0];
     clearInterval(interval7);
     clock.innerHTML="20";
@@ -81,8 +85,7 @@ export function Undo(){
         let act_box = ((document.getElementById(positions[i])));
         act_box.removeEventListener("click" , nextMove);        //remove prev posible move from clicking
     }}
-    (document.querySelector(".rotate")).style.display= "none";  //always hidden
-
+    
 } 
 
 function rotate() {
@@ -96,6 +99,7 @@ function action (){
     val = parseInt(val) +90;
     last.style.transform=`rotate(${val}deg)`;
     Shooting(Turn1);
+    (document.querySelector(".rotate")).style.display= "none";  //always hidden
     unSelect();
     // play();
     // transform();

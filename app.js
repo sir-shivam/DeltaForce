@@ -1,10 +1,11 @@
 import { ruleMove } from "./rules.js";
-import { color, player, square } from "./pieces.js";
+import { color, hitted, player, square } from "./pieces.js";
 import { Undo } from "./rules.js";
 import { bulletSpeed } from "./bullet.js";
 import { checkCollision, interval2 } from "./collission.js";
 import { detector, pieces } from "./pieces.js"; 
 //   "Titan_blue"   ,"Tank_blue"  ,"Ricochets_blue"  ,"SemiRicochets_blue"  ,"Cannon_blue"  ,"Titan_pink"  ,"Tank_pink"  ,"Ricochets_pink"  ,"SemiRicochets_pink"  ,"Cannon_pink"
+export let pauseActive = false;
 export let interval3;
 export let lastSelect;
 export let col=false;
@@ -68,12 +69,13 @@ function ahead (e){
   if(clicked){
     unSelect();
   }
+  checkPause();
   clicked=true;
   lastSelect=`${e.target.className}`;
   lastSelect= lastSelect.split(" ");        //lastselect contains the target class
   e.target.classList.add("active");
   
-  ruleMove(lastSelect ,Turn);
+  ruleMove(lastSelect ,Turn , e);
 }
 
 export function delPlay(){
@@ -104,9 +106,27 @@ export function comparing (bullet){
         
             if(test2 ){
                 console.log("hitting rico");
-                console.log(detector[j].parentNode);
-            if(hit_parent=="" || hit_parent!=detector[j].parentNode){
-                hit=1;
+                if(hit_parent=="" || hit_parent!=detector[j].parentNode){
+                  console.log(detector[j].id);
+                  hit=1;
+                  if((detector[j].parentNode.classList)[1]=="Ricochets"){
+                    if( (detector[j].id=="left" || detector[j].id=="bottom")){
+                    hit==0;
+                    hitted();
+                    console.log(detector[j].parentNode);
+                    clearInterval(interval3);
+            clearInterval(interval2);
+            clearInterval(interval5);
+            clearInterval(interval4);
+            clearInterval(interval6);
+            clearInterval(interval7);
+            bullet.parentNode.removeChild(bullet);
+            delPlay();
+            unSelect();
+            transform();
+            break;
+                }
+                }
                 clearTimeout(interval6);
                 nextDirection(detector[j]);
                 console.log("changing diraection");
@@ -116,13 +136,13 @@ export function comparing (bullet){
     interval3 = setInterval(()=>{
         bullInfo=bullet.getBoundingClientRect();
         for( let i =0 ; i< pieces.length ; i++){
-        if(!pieces[i].includes("Cannon") && !pieces[i].includes("Titan") ){
         test = ( bullInfo.top < RicoInfo[i].bottom -15  && 
         bullInfo.bottom > RicoInfo[i].top +15 && 
         bullInfo.right  > RicoInfo[i].left +15  &&   
         bullInfo.left < RicoInfo[i].right -15 );
-
+        
         if(test && hit==1){
+          hitted();
             clearInterval(interval3);
             clearInterval(interval2);
             clearInterval(interval4);
@@ -136,8 +156,8 @@ export function comparing (bullet){
             break; 
             }
 
-
-        else if (test && !Rico[i].className.includes("Rico") ){
+            
+        else if ((test && !Rico[i].className.includes("Rico") )){
             // console.log(RicoInfo[i]);
             console.log("different part");
             console.log(Rico[i]); 
@@ -148,10 +168,13 @@ export function comparing (bullet){
             clearInterval(interval4);
             clearInterval(interval6);
             clearInterval(interval7);
+            hitted();
             bullet.parentNode.removeChild(bullet);
+            unSelect();
+            delPlay();
             transform();
             break;
-            } }   }
+            }   }
         }, 10);
 }
 
@@ -217,12 +240,12 @@ export function boundary(bullet){
     interval5=setInterval(()=>{
          let bulletBound = bullet.getBoundingClientRect();
     if (bulletBound.top<board.top || bulletBound.top > board.bottom ||bulletBound.left <board.left || bulletBound.left >board.right) {
+
             clearInterval(interval2);
             clearInterval(interval3);
             clearInterval(interval4);
             clearInterval(interval5);
             clearInterval(interval7);
-
         console.log("out of box");
         bullet.parentNode.removeChild(bullet); 
         delPlay();
@@ -262,8 +285,9 @@ export function counting(){
       col=false;
       clock.style.color="white";
       clock.style.border="4px solid white"
+      document.querySelector(".space").style.backgroundColor="initial";
       document.querySelector(".space").style.color  ="white";
-    document.querySelector(".space").style.border=`2px solid white`;
+    document.querySelector(".space").style.border=`3px solid white`;
     }
   }, 500);
   interval9 =setInterval(() => {
@@ -273,14 +297,17 @@ export function counting(){
     clock.style.border=`4px solid ${color[1]}`
     clock.style.color=color[1];
     document.querySelector(".space").style.color=color[1];
-    document.querySelector(".space").style.border=`2px solid ${color[1]}`;
+    document.querySelector(".space").style.backgroundColor="white";
+    document.querySelector(".space").style.border=`3px solid ${color[1]}`;
   }
     else{
       col=true;
       clock.style.color=color[0];
     clock.style.border=`4px solid ${color[0]}`;
     document.querySelector(".space").style.color=color[0];
-    document.querySelector(".space").style.border=`2px solid ${color[0]}`;
+    document.querySelector(".space").style.backgroundColor="initial";
+
+    document.querySelector(".space").style.border=`3px solid ${color[0]}`;
     }
 }, 1000);
 // clock=document.querySelector(".clock");
@@ -302,8 +329,8 @@ interval7 = setInterval(()=>{
 
 // pause function 
 let pause = document.querySelector(".pause");
-let pauseActive = false;
-pause.addEventListener("click" , ()=> {
+pause.addEventListener("click" , countdown);
+export function countdown(){
   if(!pauseActive){
     pauseActive=true;
     clearInterval(interval7);
@@ -315,5 +342,13 @@ pause.addEventListener("click" , ()=> {
     pause.innerText="Pause";
     counting();
   }
-})
+}
 
+export function checkPause(){
+  if(pauseActive){
+    pauseActive=false;
+    clearInterval(interval7);
+    pause.innerText="Pause";
+    counting();
+  }
+}

@@ -5,6 +5,18 @@ export let player=[32,58,1,3,4,60,23,27,28,57];
 export let square=[];
 export let pieces=[];
 export let detector=[];
+const sound1 = new Audio("./sound/movesound.mp3");
+const hit1 = new Audio("./sound/hit.mp3");
+sound1.preload="auto";
+hit1.preload="auto";
+
+export function playerMoving(){
+    sound1.play();
+}
+
+export function hitted (){
+    hit1.play();
+}
 
 
 for (let  i = 0; i < arr.length; i++) {
@@ -36,15 +48,37 @@ for(let j=0 ,i=0 ; i<arr.length ; i++){
             square[i].appendChild(detector[j++]);
             detector[j].id=("right");
             square[i].appendChild(detector[j++]);
-    }
-    if((square[i].className).includes("Semi"))
-        {
+            
             detector[j].id=("left");
             square[i].appendChild(detector[j++]);
             detector[j].id=("bottom");
             square[i].appendChild(detector[j++]);
-        }
     }
+    // if((square[i].className).includes("Semi"))
+    //     {
+    //     }
+    }
+
+//     <div class="rotate">
+//     <div class="rot1">
+//     <div class="left">left</div>
+//     <div class="right">right</div>
+// </div>
+// </div>
+
+export let revolve = document.createElement("div");
+revolve.classList.add("rotate");
+let rev1 = document.createElement("div");
+rev1.classList.add("rot1");
+let left = document.createElement("div");
+let right = document.createElement("div");
+left.classList.add("left");
+left.innerHTML="left";
+right.classList.add("right");
+right.innerHTML= "right";                        
+rev1.appendChild(left);
+rev1.appendChild(right);
+revolve.appendChild(rev1);
 
     // reset function
     let reset = document.querySelector(".reset");
