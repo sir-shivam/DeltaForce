@@ -13,7 +13,7 @@ let k=0;
 let childParent=[];
 let b_post;
 let Turn1;
-let val = 0;
+let val = 360;
 
 //called from app.js to show rule and posible move
 export function ruleMove (element , Turn ,e) {
@@ -21,27 +21,33 @@ export function ruleMove (element , Turn ,e) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
         boxId[k] = parentId;
         parentId=parentId.slice(3,6);
+        if(element[1] === "Cannon"){
+            b_post=[1,-1];
+        }
         if(parentId%8 === 0){
-            b_post=[8,-1 , 7 , -8 ,-9];
+            if(element[1] === "Cannon"){
+                b_post=[-1];
+            }
+            else{b_post=[8,-1 , 7 , -8 ,-9];}
         }
         else if (parentId%8 === 1){
-            b_post=[1,-8 ,-7 , 8 ,9];
+            
+            if(element[1] === "Cannon"){
+                b_post=[1];
+            }
+            else{b_post=[1,-8 ,-7 , 8 ,9];}
+   
         }
         else{
-            b_post= [1,9,-7,8,-8,7,-1,-9];
+            if(element[1] === "Cannon"){
+                b_post=[1,-1];
+            }
+            else {b_post= [1,9,-7,8,-8,7,-1,-9];}
         }
+
        
         for(let i=0 ; i<8 ; i++){
-            if(element[1] === "Cannon"){
-                if(element[0].includes(color[0])){
-                    positions[i]= 57+i;  
-                }
-                else{
-                    positions[i]= 1+i; 
-                }
-            }
-            else{
-            positions[i]= parseInt(parentId) + b_post[i];}
+            positions[i]= parseInt(parentId) + b_post[i];
             positions[i]=`box`+`${positions[i]}`;
         }
         showStep(Turn);
@@ -95,9 +101,15 @@ function rotate() {
 }
 
 function action (){
+    console.log(this.className);
     let last= document.querySelector(`.${lastSelect[0]}`);
-    val = parseInt(val) +90;
+    if(this.className="left"){
+        val = parseInt(val) - 90;
+    }
+    else{
+    val = parseInt(val) + 90;}
     last.style.transform=`rotate(${val}deg)`;
+    playerMoving();
     Shooting(Turn1);
     (document.querySelector(".rotate")).style.display= "none";  //always hidden
     unSelect();

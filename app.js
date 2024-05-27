@@ -1,5 +1,5 @@
 import { ruleMove } from "./rules.js";
-import { color, hitted, player, square } from "./pieces.js";
+import { color,  hitted, player, square } from "./pieces.js";
 import { Undo } from "./rules.js";
 import { bulletSpeed } from "./bullet.js";
 import { checkCollision, interval2 } from "./collission.js";
@@ -87,6 +87,8 @@ export function delPlay(){
 export const unSelect = () =>{
     let prev = document.querySelector(`.${lastSelect[0]}`);
     prev.classList.remove("active");
+    if(document.querySelector(".rotate")!= null){
+    (document.querySelector(".rotate")).style.display= "none";}
     Undo();
   }
 
@@ -114,16 +116,23 @@ export function comparing (bullet){
                     hit==0;
                     hitted();
                     console.log(detector[j].parentNode);
-                    clearInterval(interval3);
-            clearInterval(interval2);
-            clearInterval(interval5);
-            clearInterval(interval4);
-            clearInterval(interval6);
-            clearInterval(interval7);
-            bullet.parentNode.removeChild(bullet);
-            delPlay();
-            unSelect();
-            transform();
+                    // clearInterval(interval3);
+            // clearInterval(interval2);
+            // clearInterval(interval5);
+            // clearInterval(interval4);
+            // clearInterval(interval6);
+            // clearInterval(interval7);
+            (detector[j].parentNode).style.background = "none";
+            // (detector[j].parentNode).appendChild(div1);
+            // (detector[j].parentNode).appendChild(div2);
+            // (detector[j].parentNode).appendChild(div3);
+            // (detector[j].parentNode).appendChild(div4);
+            ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);
+
+            // bullet.parentNode.removeChild(bullet);
+            // delPlay();
+            // unSelect();
+            // transform();
             break;
                 }
                 }

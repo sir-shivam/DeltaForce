@@ -1,7 +1,7 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"];
-export let player=[32,58,1,3,4,60,23,27,28,57];
+export let player=[32,58,9,1,4,60,23,27,19,59];
 export let square=[];
 export let pieces=[];
 export let detector=[];
@@ -87,3 +87,12 @@ revolve.appendChild(rev1);
 export function reseting(){
         window.location.reload(true);
 }
+
+// export let div1= document.createElement("div");
+// export let div2= document.createElement("div");
+// export let div3= document.createElement("div");
+// export let div4= document.createElement("div");
+// div1.classList.add("div1");
+// div2.classList.add("div2");
+// div3.classList.add("div3");
+// div4.classList.add("div4");
