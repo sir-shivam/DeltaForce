@@ -1,4 +1,4 @@
-import { color, pieces, playerMoving, revolve } from "./pieces.js";
+import { color, pieces, playerMoving} from "./pieces.js";
 import { checkPause, clock, intervaal8, interval7, interval9, lastSelect, pauseActive, play } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
@@ -13,7 +13,7 @@ let k=0;
 let childParent=[];
 let b_post;
 let Turn1;
-let val = 360;
+let val=[1440,1440,1440,1440];
 
 //called from app.js to show rule and posible move
 export function ruleMove (element , Turn ,e) {
@@ -52,8 +52,6 @@ export function ruleMove (element , Turn ,e) {
         }
         showStep(Turn);
         if( element[1]=== "Ricochets" || element[1]=== "SemiRicochets"  ){
-            document.querySelector(`.${element[0]}`).appendChild(revolve);
-            console.log("appppppending");
             rotate();
         }  
     }
@@ -103,15 +101,31 @@ function rotate() {
 function action (){
     console.log(this.className);
     let last= document.querySelector(`.${lastSelect[0]}`);
-    if(this.className="left"){
-        val = parseInt(val) - 90;
+    let m;
+    if (lastSelect[0] == "SemiRicochets_pink"){
+        m=0;
+    }
+    else if(lastSelect[0] == "Ricochets_pink"){
+        m=1;
+    }
+    else if(lastSelect[0] == "SemiRicochets_blue"){
+        m=2
+    }
+    else if(lastSelect[0] == "Ricochets_blue"){
+        m=3
+    }
+    console.log(val[m] , m , lastSelect);
+    if(this.className=="right"){
+        val[m]= parseInt(val[m]) - 90;
+        console.log("lefting");
     }
     else{
-    val = parseInt(val) + 90;}
-    last.style.transform=`rotate(${val}deg)`;
+        console.log("righting")
+    val[m] = parseInt(val[m]) + 90;}
+    last.style.transform=`rotate(${val[m]}deg)`;
     playerMoving();
     Shooting(Turn1);
-    (document.querySelector(".rotate")).style.display= "none";  //always hidden
+    // (document.querySelector(".rotate")).style.display= "none";  //always hidden
     unSelect();
     // play();
     // transform();

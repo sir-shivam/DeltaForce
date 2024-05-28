@@ -1,7 +1,7 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"];
-export let player=[32,58,9,1,4,60,23,27,19,59];
+export let player=[32,58,17,1,4,60,23,27,19,59];
 export let square=[];
 export let pieces=[];
 export let detector=[];
@@ -27,7 +27,14 @@ for (let  i = 0; i < arr.length; i++) {
     square[i].classList.add(`${arr[i]}_${color[j]}`);
     pieces[i]=(`${arr[i]}_${color[j]}`);
     square[i].classList.add(arr[i]);
-    square[i].style.backgroundColor=`${color[j]}`;
+    if(arr[i]=="Ricochets"){
+        square[i].style.backgroundImage = `linear-gradient(to top right, ${color[j]} 50% , transparent 0%)`;
+    }
+    else if(arr[i]=="SemiRicochets"){
+        square[i].style.backgroundImage = `linear-gradient(to bottom left, transparent 45%, ${color[j]} 45%, ${color[j]} 55%, transparent 0%)`;    
+    }
+    else{
+    square[i].style.backgroundColor=`${color[j]}`;}
     square[i].innerText= arr[i];
     
 }
@@ -54,31 +61,7 @@ for(let j=0 ,i=0 ; i<arr.length ; i++){
             detector[j].id=("bottom");
             square[i].appendChild(detector[j++]);
     }
-    // if((square[i].className).includes("Semi"))
-    //     {
-    //     }
     }
-
-//     <div class="rotate">
-//     <div class="rot1">
-//     <div class="left">left</div>
-//     <div class="right">right</div>
-// </div>
-// </div>
-
-export let revolve = document.createElement("div");
-revolve.classList.add("rotate");
-let rev1 = document.createElement("div");
-rev1.classList.add("rot1");
-let left = document.createElement("div");
-let right = document.createElement("div");
-left.classList.add("left");
-left.innerHTML="left";
-right.classList.add("right");
-right.innerHTML= "right";                        
-rev1.appendChild(left);
-rev1.appendChild(right);
-revolve.appendChild(rev1);
 
     // reset function
     let reset = document.querySelector(".reset");
@@ -87,12 +70,3 @@ revolve.appendChild(rev1);
 export function reseting(){
         window.location.reload(true);
 }
-
-// export let div1= document.createElement("div");
-// export let div2= document.createElement("div");
-// export let div3= document.createElement("div");
-// export let div4= document.createElement("div");
-// div1.classList.add("div1");
-// div2.classList.add("div2");
-// div3.classList.add("div3");
-// div4.classList.add("div4");

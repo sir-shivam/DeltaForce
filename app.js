@@ -85,10 +85,10 @@ export function delPlay(){
   
   
 export const unSelect = () =>{
+  if(document.querySelector(`.${lastSelect[0]}`)!= null){
     let prev = document.querySelector(`.${lastSelect[0]}`);
-    prev.classList.remove("active");
-    if(document.querySelector(".rotate")!= null){
-    (document.querySelector(".rotate")).style.display= "none";}
+    prev.classList.remove("active");}
+    document.querySelector(".rotate").style.display="none";
     Undo();
   }
 
@@ -113,8 +113,9 @@ export function comparing (bullet){
                   hit=1;
                   if((detector[j].parentNode.classList)[1]=="Ricochets"){
                     if( (detector[j].id=="left" || detector[j].id=="bottom")){
-                    hit==0;
+                    hit=0;
                     hitted();
+                    // path_i=0;
                     console.log(detector[j].parentNode);
                     // clearInterval(interval3);
             // clearInterval(interval2);
@@ -127,7 +128,10 @@ export function comparing (bullet){
             // (detector[j].parentNode).appendChild(div2);
             // (detector[j].parentNode).appendChild(div3);
             // (detector[j].parentNode).appendChild(div4);
+
             ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);
+
+
 
             // bullet.parentNode.removeChild(bullet);
             // delPlay();
@@ -136,10 +140,11 @@ export function comparing (bullet){
             break;
                 }
                 }
-                clearTimeout(interval6);
+                // clearTimeout(interval6);
                 nextDirection(detector[j]);
                 console.log("changing diraection");
                 hit_parent = detector[j].parentNode; }
+                break;
             }  }   }, 10);
     
     interval3 = setInterval(()=>{
@@ -166,7 +171,8 @@ export function comparing (bullet){
             }
 
             
-        else if ((test && !Rico[i].className.includes("Rico") )){
+        else if(Rico[i]!=null){
+        if ((test && !Rico[i].className.includes("Rico") )){
             // console.log(RicoInfo[i]);
             console.log("different part");
             console.log(Rico[i]); 
@@ -183,7 +189,7 @@ export function comparing (bullet){
             delPlay();
             transform();
             break;
-            }   }
+            }  } }
         }, 10);
 }
 
@@ -343,12 +349,12 @@ export function countdown(){
   if(!pauseActive){
     pauseActive=true;
     clearInterval(interval7);
-    pause.innerHTML="Play";
+    pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
   }
   else{
     pauseActive=false;
     clearInterval(interval7);
-    pause.innerText="Pause";
+    pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
     counting();
   }
 }
@@ -357,7 +363,7 @@ export function checkPause(){
   if(pauseActive){
     pauseActive=false;
     clearInterval(interval7);
-    pause.innerText="Pause";
+    pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
     counting();
   }
 }

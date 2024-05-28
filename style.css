@@ -67,6 +67,7 @@ align-items: center;
   color: white;
   font-size: larger;
   align-content: center;
+  position: relative;
 }
 .space{
   font-size: large;
@@ -80,6 +81,7 @@ align-items: center;
   justify-content: center;
   border: 3px solid white;
   border-radius: 1rem;
+  position: relative;
 }
 @media (min-width: 576px) {
   
@@ -87,13 +89,15 @@ align-items: center;
 .board{
     height: 680px;
     width: 680px;
-    background-color: gray;
+    /* background-color: gray; */
     border-radius: 1.1rem;
+    border: 2px solid #690884;
     display: flex;
     flex-wrap:wrap;
     justify-content: center;
     align-items: center;
     box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to bottom, #a5bef1 0%, #bbc9c9 100%);
 }
 
 .box {
@@ -116,19 +120,15 @@ align-items: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 5px 5px 2px rgba(40, 50, 138, 0.37);
     
 }
 .Ricochets , .SemiRicochets{
     width: 100%; 
   height: 100%;
   font-size: 10px; 
-  transform: rotate(0deg);
-  background-image:
-    /* linear-gradient(to bottom left, transparent 40%, red 0%); */
-    linear-gradient(to top right, red 0%, transparent 60% , red 100%);
-    /* linear-gradient(to bottom left, red 40% , transparent 0%), */
-    /* linear-gradient(to top right  ,transparent 60%, red 0% ); */
-    /* linear-gradient(to  right, red 40%, transparent 50%); */
+  /* transform: rotate(45deg); */
+  box-shadow: 5px 5px 2px rgba(40, 50, 138, 0.37);
     border-radius: 5px;
     position: relative;
     color: white;
@@ -136,23 +136,33 @@ align-items: center;
     justify-content: center;
     align-items: center;
     text-overflow: ellipsis;
+    border-radius: 4px;
  
 }
+.SemiRicochets{
+  background-image: 
+linear-gradient(to bottom left, transparent 45%, white 45%, white 55%, transparent 0%);
+}
 
+.Ricochets{
+background-image: 
+linear-gradient(to top right, red 50% , transparent 0%);
+}
 
 .active{
     border: 2px solid white;
 }
 
 .rotate {
-    height: 80px;
+    height: 75px;
     width: 150px;
-    margin-top: 10%;
-    margin-left: 600%;
+    margin-top: 35%;             
+    margin-left: 210%;
     border: 2px solid black;
     background-color: rgb(85, 180, 180);
     display: none;
     position: absolute;
+    border-radius: 0.4rem;
 }
 .rot1{
     height: 100%;
@@ -160,6 +170,7 @@ align-items: center;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    /* border-radius: 2rem; */
 }
 
 .left , .right {
@@ -169,6 +180,7 @@ align-items: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0.5rem;
     
 }
 
@@ -186,7 +198,7 @@ align-items: center;
       width: 2px;
       height: 50px;
       position: absolute;
-      border: 2px solid blue;
+      border: 2px solid rgb(110, 110, 138);
       visibility: hidden;
       
     }
@@ -224,11 +236,13 @@ align-items: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: aliceblue;
+    color: rgb(25,34,42);
     font-weight: 900;
     font-size: x-large;
-    background-color: slategray;
-    border: 2px solid Black;
+    backdrop-filter: blur(30px);
+    box-shadow: 5px 10px 5px rgba(40, 50, 138, 0.37);
+    background-color: linear-gradient(to top, #62124b 0%, #510cb2 10000%);
+    border: 2px solid rgba(136, 103, 212, 0.8);
   }
   .reset:hover , .pause:hover , .undo:hover , .redo:hover{
     cursor: pointer;
