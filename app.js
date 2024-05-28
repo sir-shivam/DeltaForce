@@ -121,28 +121,25 @@ export function comparing (bullet){
             // clearInterval(interval2);
             // clearInterval(interval5);
             // clearInterval(interval4);
-            // clearInterval(interval6);
+            clearInterval(interval6);
             // clearInterval(interval7);
             (detector[j].parentNode).style.background = "none";
             // (detector[j].parentNode).appendChild(div1);
             // (detector[j].parentNode).appendChild(div2);
             // (detector[j].parentNode).appendChild(div3);
             // (detector[j].parentNode).appendChild(div4);
-
             ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);
-
-
-
             // bullet.parentNode.removeChild(bullet);
             // delPlay();
             // unSelect();
             // transform();
-            break;
+            // break;
                 }
                 }
-                // clearTimeout(interval6);
+                path_i=0;
+                clearTimeout(interval6);
+                console.log(path_i);
                 nextDirection(detector[j]);
-                console.log("changing diraection");
                 hit_parent = detector[j].parentNode; }
                 break;
             }  }   }, 10);
@@ -207,8 +204,7 @@ function nextDirection (e){
     if((e.id)===("right")){ path_i++}
     else if((e.id)===("left")){ path_i++}
     else if((e.id)===("top")){path_i--}
-    else if((e.id)==="bottom"){ path_i--;
-    } 
+    else if((e.id)==="bottom"){ path_i--;} 
 }
 
 export function moveDirection (bullet){
