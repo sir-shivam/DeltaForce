@@ -9,6 +9,9 @@ import { delPlay } from "./app.js";
 export let positions=[];
 let boxId=[];
 let pieceId=[];
+let angleInitial=[];
+let angle=[];
+let rotating=[];
 let k=0;
 let childParent=[];
 let b_post;
@@ -20,6 +23,7 @@ export function ruleMove (element , Turn ,e) {
     if(element[1]=== "Titan" || element[1]=== "Tank" || element[1]=== "Ricochets" || element[1]=== "SemiRicochets" || element[1]=== "Cannon" ) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
         boxId[k] = parentId;
+        console.log(boxId[k]);
         parentId=parentId.slice(3,6);
         if(element[1] === "Cannon"){
             b_post=[1,-1];
@@ -73,7 +77,11 @@ function showStep(Turn) {
 function nextMove(){
     checkPause();
     playerMoving();
+    // screen();
+    childParent[k]=this.id;
+    rotating[k]=false;
     pieceId[k++]=lastSelect[0];
+    console.log(lastSelect[0]);
     clearInterval(interval7);
     clock.innerHTML="20";
     let child= document.querySelector(`.${lastSelect[0]}`);
@@ -99,7 +107,9 @@ function rotate() {
 }
 
 function action (){
-    console.log(this.className);
+    pieceId[k] = lastSelect[0];
+    console.log(pieceId[k]);
+    rotating[k]=true;
     let last= document.querySelector(`.${lastSelect[0]}`);
     let m;
     if (lastSelect[0] == "SemiRicochets_pink"){
@@ -114,14 +124,18 @@ function action (){
     else if(lastSelect[0] == "Ricochets_blue"){
         m=3
     }
-    console.log(val[m] , m , lastSelect);
+    //console.log(val[m] , m , lastSelect);
+    angleInitial[k]=val[m];
+    console.log(angleInitial[k]);
     if(this.className=="right"){
-        val[m]= parseInt(val[m]) - 90;
-        console.log("lefting");
+        val[m]= parseInt(val[m]) + 90;
+        //console.log("lefting");
     }
     else{
-        console.log("righting")
-    val[m] = parseInt(val[m]) + 90;}
+        //console.log("righting")
+    val[m] = parseInt(val[m]) - 90;}
+    angle[k++]=val[m];
+    console.log(angle[k-1]);
     last.style.transform=`rotate(${val[m]}deg)`;
     playerMoving();
     Shooting(Turn1);
@@ -138,9 +152,15 @@ Rd.addEventListener("click",RedoMain);
 
 function UndoMain() {
     if(k>0){
+    if(rotating[k-1]){
+        let child= document.querySelector(`.${pieceId[--k]}`);
+        childParent[k] = child.parentElement.id;
+        child.style.transform = `rotate(${angleInitial}deg)`;
+    }
+    else{
     let child= document.querySelector(`.${pieceId[--k]}`);
     childParent[k] = child.parentElement.id;
-    (document.querySelector(`#${boxId[k]}`)).appendChild(child);
+    (document.querySelector(`#${boxId[k]}`)).appendChild(child);}
     clock.innerHTML="20";
     clearInterval(intervaal8);
     clearInterval(interval9);
@@ -150,12 +170,35 @@ function UndoMain() {
 }
 function RedoMain() {
     if(childParent[k]!=null ){
-    let child= document.querySelector(`.${pieceId[k]}`);
+    if(rotating[k]){
+        let child= document.querySelector(`.${pieceId[k]}`);
+        child.style.transform=`rotate(${angle[k]}deg)`;
+    }
+    else {let child= document.querySelector(`.${pieceId[k]}`);
     (document.querySelector(`#${childParent[k++]}`)).appendChild(child);
+    }
   clearInterval(intervaal8);
   clearInterval(interval9);
   clearInterval(interval7);
   clock.innerHTML="20";
   delPlay();
     transform();}
+}
+
+export function screen(){
+    let d1 = document.createElement("div");
+    d1.classList.add("d1");
+    let d2 = document.createElement("div");
+    d2.classList.add("d2");
+    d2.innerHTML=pieceId[k-1];
+    let d3 = document.createElement("div");
+    d3.classList.add("d3");
+    d3.innerText=boxId[k-1];
+    let d4 = document.createElement("div");
+    d4.classList.add("d4");
+    d4.innerText=childParent[k-1];
+    d1.appendChild(d2);
+    d1.appendChild(d3);
+    d1.appendChild(d4);
+    (document.querySelector(".display")).appendChild(d1);
 }

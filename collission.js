@@ -37,8 +37,11 @@ export  function checkCollision(bullet) {
     hitted();
     bullet.parentNode.removeChild(bullet); 
     delPlay();
+    if(Titan.className.includes("blue")){
+    alert("game over PINK wins ");}
+    else{
+      alert("game over BLUE wins ");}
     transform();
-    alert("game over");
 
   }
 }, 10);

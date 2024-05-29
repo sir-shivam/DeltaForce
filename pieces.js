@@ -27,6 +27,16 @@ for (let  i = 0; i < arr.length; i++) {
     square[i].classList.add(`${arr[i]}_${color[j]}`);
     pieces[i]=(`${arr[i]}_${color[j]}`);
     square[i].classList.add(arr[i]);
+    // if(arr[i]=="Cannon"){
+    //     square[i].innerHTML = "<img src='./sound/cannon.png' alt='Cannon' >";
+    // }
+    // else if(arr[i]=="Titan"){
+    //     square[i].innerHTML = "<img src='./sound/titan.png' alt='Titan' >";
+    // }
+    // else if(arr[i]== "Tank"){
+    //     square[i].innerHTML = "<img src='./sound/tank.png' alt='Tank' >";
+    // }
+
     if(arr[i]=="Ricochets"){
         square[i].style.backgroundImage = `linear-gradient(to top right, ${color[j]} 50% , transparent 0%)`;
     }

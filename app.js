@@ -1,10 +1,11 @@
-import { ruleMove } from "./rules.js";
+import { ruleMove, screen } from "./rules.js";
 import { color,  hitted, player, square } from "./pieces.js";
 import { Undo } from "./rules.js";
 import { bulletSpeed } from "./bullet.js";
 import { checkCollision, interval2 } from "./collission.js";
 import { detector, pieces } from "./pieces.js"; 
 //   "Titan_blue"   ,"Tank_blue"  ,"Ricochets_blue"  ,"SemiRicochets_blue"  ,"Cannon_blue"  ,"Titan_pink"  ,"Tank_pink"  ,"Ricochets_pink"  ,"SemiRicochets_pink"  ,"Cannon_pink"
+export let mode="hacker";
 export let pauseActive = false;
 export let interval3;
 export let lastSelect;
@@ -37,22 +38,24 @@ export function transform(){
 if(Turn){
   squareTurn=square1;
   Turn=false;
-  console.log(bullet_move);
+  //////console.log(bullet_move);
   bullet_move ="down";
-  console.log(bullet_move);
+  //////console.log(bullet_move);
   path_i=0;
   document.querySelector(".space").innerHTML=color[1];
+  screen();
   play();
 }
 
 else{
   squareTurn=square;
   Turn=true;
-  console.log(bullet_move);
+  //////console.log(bullet_move);
   bullet_move="up";
-  console.log(bullet_move);
+  //////console.log(bullet_move);
   path_i=0;
   document.querySelector(".space").innerHTML=color[0];
+  screen();
   play();
 }
 counting();
@@ -107,16 +110,16 @@ export function comparing (bullet){
             bullInfo.left < detectorInfo[j].right );
         
             if(test2 ){
-                console.log("hitting rico");
+                //////console.log("hitting rico");
                 if(hit_parent=="" || hit_parent!=detector[j].parentNode){
-                  console.log(detector[j].id);
+                  //////console.log(detector[j].id);
                   hit=1;
                   if((detector[j].parentNode.classList)[1]=="Ricochets"){
                     if( (detector[j].id=="left" || detector[j].id=="bottom")){
                     hit=0;
                     hitted();
                     // path_i=0;
-                    console.log(detector[j].parentNode);
+                    //////console.log(detector[j].parentNode);
                     // clearInterval(interval3);
             // clearInterval(interval2);
             // clearInterval(interval5);
@@ -138,7 +141,7 @@ export function comparing (bullet){
                 }
                 path_i=0;
                 clearTimeout(interval6);
-                console.log(path_i);
+                //////console.log(path_i);
                 nextDirection(detector[j]);
                 hit_parent = detector[j].parentNode; }
                 break;
@@ -158,9 +161,9 @@ export function comparing (bullet){
             clearInterval(interval2);
             clearInterval(interval4);
             clearTimeout(interval6);
-            console.log("collide yahuuuu");
+            //////console.log("collide yahuuuu");
             hit=0;
-            console.log(bullet.style.top);
+            //////console.log(bullet.style.top);
             bullet.style.top = (RicoInfo[i].top + RicoInfo[i].bottom) /2 -10+ "px";
             bullet.style.left = (RicoInfo[i].left + RicoInfo[i].right ) /2 -5 +"px";
             moveDirection(bullet);
@@ -170,10 +173,10 @@ export function comparing (bullet){
             
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
-            // console.log(RicoInfo[i]);
-            console.log("different part");
-            console.log(Rico[i]); 
-            console.log(bullet.style.top);
+            // //////console.log(RicoInfo[i]);
+            //////console.log("different part");
+            //////console.log(Rico[i]); 
+            //////console.log(bullet.style.top);
             clearInterval(interval3);
             clearInterval(interval2);
             clearInterval(interval5);
@@ -208,8 +211,8 @@ function nextDirection (e){
 }
 
 export function moveDirection (bullet){
-    console.log(bullet_move);
-    console.log(path_i);
+    //////console.log(bullet_move);
+    //////console.log(path_i);
     if ((bullet_move ==="up" && path_i<0) || (bullet_move ==="down" && path_i >0)){
     interval4 = setInterval(() => {
         const currentLeft = parseInt(bullet.style.left);
@@ -257,7 +260,7 @@ export function boundary(bullet){
             clearInterval(interval4);
             clearInterval(interval5);
             clearInterval(interval7);
-        console.log("out of box");
+        ////console.log("out of box");
         bullet.parentNode.removeChild(bullet); 
         delPlay();
         transform();
@@ -302,7 +305,7 @@ export function counting(){
     }
   }, 500);
   interval9 =setInterval(() => {
-    console.log("changing");
+    ////console.log("changing");
     if(!Turn){
     col=true;
     clock.style.border=`4px solid ${color[1]}`
@@ -328,7 +331,11 @@ interval7 = setInterval(()=>{
   if(time<0){
     clearInterval(interval7);
     clock.innerHTML=time;
-    alert("other party wins");
+    if(Turn){
+    alert("other party BLUE  wins");}
+    else{
+      alert("other party PINK  wins");
+    }
     time=20;
     clock.innerHTML=time;
   }
@@ -345,12 +352,12 @@ export function countdown(){
   if(!pauseActive){
     pauseActive=true;
     clearInterval(interval7);
-    pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
+    pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
   }
   else{
     pauseActive=false;
     clearInterval(interval7);
-    pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
+    pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
     counting();
   }
 }
@@ -359,7 +366,7 @@ export function checkPause(){
   if(pauseActive){
     pauseActive=false;
     clearInterval(interval7);
-    pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
+    pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
     counting();
   }
 }
