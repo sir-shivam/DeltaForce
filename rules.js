@@ -71,7 +71,7 @@ function showStep(Turn) {
             if(act_box.hasChildNodes()){
                 if(lastSelect[1]=="Ricochets"){
                     // exchangeof position
-                    if(!act_box.querySelector("div").className.includes("Titan")){
+                    if(!act_box.querySelector("div").className.includes("Titan") || !act_box.querySelector("div").className.includes("Cannon")  ){
                         act_box.querySelector("div").removeEventListener("click", ahead )
                         act_box.addEventListener("click", nextMove);
                     }

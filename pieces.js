@@ -1,7 +1,7 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"];
-export let player=[32,58,9,17,4,60,23,16,64,59];
+export let player=[32,27,11,19,4,59,20,16,64,60];
 export let square=[];
 export let pieces=[];
 export let detector=[];
@@ -69,6 +69,14 @@ for(let j=0 ,i=0 ; i<arr.length ; i++){
             detector[j].id=("left");
             square[i].appendChild(detector[j++]);
             detector[j].id=("bottom");
+            square[i].appendChild(detector[j++]);
+    }
+    else if((square[i].className).includes("Tank") && i<5 ){
+        detector[j].id=("top");
+        square[i].appendChild(detector[j++]);   
+    }
+    else if((square[i].className).includes("Tank")&& i>4){
+        detector[j].id=("bottom");
             square[i].appendChild(detector[j++]);
     }
     }

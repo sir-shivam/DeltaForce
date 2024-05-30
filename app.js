@@ -19,15 +19,14 @@ export let Turn = true ;
 export let path_i= 0;
 export let interval4;
 export let clock=document.querySelector(".clock");
+export let bullet_move="up";
 let Rico = [];
 let RicoInfo = [];
 let bullInfo;
 let detectorInfo=[];
 let hit=0;
 let hit_parent = "";
-// let path= ["up","right","down","left"];
 let test;
-export let bullet_move="up";
 let clicked =false;
 let square1=square;
 square1 = square1.splice(0,5);
@@ -142,6 +141,22 @@ export function comparing (bullet){
             // break;
                 }
                 }
+                else if((detector[j].parentNode.classList)[1]=="Tank"){
+                  clearInterval(interval6);
+                  hit=0;
+            // clearInterval(interval5);
+            // clearInterval(interval4);
+            // clearInterval(interval2);
+            // clearInterval(interval5);
+            // clearInterval(interval4);
+            clearInterval(interval3);
+            console.log("in takkkkkkkkkkkkk");
+            detector[j].parentNode.classList.add("shivam");
+            setTimeout(()=>{
+              document.querySelector(".shivam").classList.remove("shivam");
+            },170);
+            break;
+                }
                 path_i=0;
                 clearTimeout(interval6);
                 //////console.log(path_i);
@@ -159,7 +174,7 @@ export function comparing (bullet){
         bullInfo.left < RicoInfo[i].right -15 );
         
         if(test && hit==1){
-          hitted();
+            hitted();
             clearInterval(interval3);
             clearInterval(interval2);
             clearInterval(interval4);
@@ -176,6 +191,7 @@ export function comparing (bullet){
             
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
+          if(!Rico[i].className.includes("shivam")){
             // //////console.log(RicoInfo[i]);
             //////console.log("different part");
             //////console.log(Rico[i]); 
@@ -191,7 +207,7 @@ export function comparing (bullet){
             unSelect();
             delPlay();
             transform();
-            break;
+            break;}
             }  } }
         }, 10);
 }
