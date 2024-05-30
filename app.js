@@ -36,6 +36,7 @@ let squareTurn = square;
 
 export function transform(){
 if(Turn){
+
   squareTurn=square1;
   Turn=false;
   //////console.log(bullet_move);
@@ -44,6 +45,7 @@ if(Turn){
   path_i=0;
   document.querySelector(".space").innerHTML=color[1];
   screen();
+  disabling();
   play();
 }
 
@@ -56,6 +58,7 @@ else{
   path_i=0;
   document.querySelector(".space").innerHTML=color[0];
   screen();
+  disabling();
   play();
 }
 counting();
@@ -211,8 +214,7 @@ function nextDirection (e){
 }
 
 export function moveDirection (bullet){
-    //////console.log(bullet_move);
-    //////console.log(path_i);
+    clearInterval(interval10);
     if ((bullet_move ==="up" && path_i<0) || (bullet_move ==="down" && path_i >0)){
     interval4 = setInterval(() => {
         const currentLeft = parseInt(bullet.style.left);
@@ -368,5 +370,58 @@ export function checkPause(){
     clearInterval(interval7);
     pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
     counting();
+  }
+}
+let interval10;
+let direct = [false,false];
+//directional move
+let tick = document.querySelectorAll(".directMove");
+Array.from(tick).forEach((tk) =>{
+tk.addEventListener("click", ()=> {
+
+  if(tk.id == "left1"){
+    document.querySelector("#right1").style.backgroundColor="initial";
+    direct[1]=false;
+  if(direct[0]){
+    document.querySelector("#left1").style.backgroundColor="initial";
+    direct[0]=false;
+  }
+  else{
+  direct[0]=true;
+  tk.style.backgroundColor = "blue";}}
+
+  else if(tk.id== "right1"){
+    document.querySelector("#left1").style.backgroundColor="initial";
+    direct[0]=false;
+    if(direct[1]){
+      document.querySelector("#right1").style.backgroundColor="initial";
+    direct[1]=false;
+    }
+    else{
+    direct[1]=true;
+    tk.style.backgroundColor = "blue";}
+  }
+
+})})
+
+export function disabling(){
+  document.querySelector("#left1").style.backgroundColor="initial";
+    direct[0]=false;
+    document.querySelector("#right1").style.backgroundColor="initial";
+    direct[1]=false;
+}
+
+export function checkDirecting(bullet){
+  if(direct[0]){
+    interval10 = setInterval(() => {
+      const currentLeft = parseInt(bullet.style.left);
+      bullet.style.left = (currentLeft - bulletSpeed) + "px";
+  }, 10);
+  }
+  else if(direct[1]){
+    interval10 = setInterval(() => {
+      const currentLeft = parseInt(bullet.style.left);
+      bullet.style.left = (currentLeft + bulletSpeed) + "px";
+  }, 10);
   }
 }

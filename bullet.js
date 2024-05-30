@@ -1,4 +1,4 @@
-import { moveDirection } from "./app.js";
+import { checkDirecting, moveDirection } from "./app.js";
 import { interval2 } from "./collission.js";
 import { checkCollision } from "./collission.js";
 import { boundary, comparing } from "./app.js";
@@ -39,6 +39,7 @@ function createBullet(Turn1) {
 
 function moveBullet(bullet) {
     moveDirection(bullet);
+    checkDirecting(bullet);
     checkCollision(bullet);
     comparing(bullet);
     boundary(bullet); 

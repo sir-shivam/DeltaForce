@@ -190,10 +190,11 @@ linear-gradient(to top right, red 50% , transparent 0%);
 }
 
 .rotate {
+  z-index: 1;
     height: 75px;
     width: 150px;
     margin-top: 35%;             
-    margin-left: 210%;
+    margin-left: 530%;
     border: 2px solid black;
     background-color: rgb(85, 180, 180);
     display: none;
@@ -488,15 +489,47 @@ margin-left: 20px;
   justify-content: center;
 }
 .history{
+  /* z-index: 3; */
   position: absolute;
   height: 50px;
   width: 100px;
   /* border: 2px solid black; */
-  margin-top: -15px;
-  margin-left: 120px;
+  margin-top: 65px;
+  margin-left: -520px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: larger;
   color: black;
+}
+.direct1{
+  margin: 20px 20px 30px 5px ;
+  height: 40px;
+  width: 90%;
+}
+
+.direct2{
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid purple;
+  border-radius: 1rem;
+
+}
+.directMove{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 1px solid black;
+  position: relative;
+  margin-left: -70px;
+}
+.span{
+  position: absolute;
+  margin-left: 30px;
+  width: 80px;
+}
+.directMove:hover{
+  cursor: pointer;
 }
