@@ -1,4 +1,4 @@
-import { checkDirecting, moveDirection } from "./app.js";
+import { bullet_move, checkDirecting, direct, moveDirection } from "./app.js";
 import { interval2 } from "./collission.js";
 import { checkCollision } from "./collission.js";
 import { boundary, comparing } from "./app.js";
@@ -19,7 +19,20 @@ function createBullet(Turn1) {
     const bullet = document.createElement("div");
     bullet.classList.add("bullet"); 
     bullet.style.position = "absolute"; 
-    if(!Turn1){
+    if(direct[2]){
+        const containerHeight = container.offsetHeight ;
+        bullet.style.top = container.offsetTop  + containerHeight /2  + "px";
+        bullet.style.left = container.offsetLeft  + "px";
+        // bullet_move="left";
+        
+    }
+    else if(direct[3]){
+        const containerHeight = container.offsetHeight ;
+        bullet.style.top = container.offsetTop + containerHeight /2  + "px";
+        bullet.style.left = container.offsetLeft + container.offsetWidth  +"px";
+        // bullet_move="right";
+    }
+    else if(!Turn1){
         const containerHeight = container.offsetHeight ;
         bullet.style.top = container.offsetTop + containerHeight + "px";
         bullet.style.left = container.offsetLeft + container.offsetWidth / 2 + "px";

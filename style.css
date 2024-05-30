@@ -345,7 +345,7 @@ linear-gradient(to top right, red 50% , transparent 0%);
   }
     
   .buttns{
-    margin-top: 50px;
+    margin-top: -100px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -353,7 +353,7 @@ linear-gradient(to top right, red 50% , transparent 0%);
     width: fit-content;
   }
   .reset, .pause , .undo , .redo{
-margin-top: 5px;
+/* margin-top: 5px; */
 margin-right: 20px;
 margin-left: 20px;
 margin-bottom: 10px;
@@ -380,7 +380,7 @@ margin-bottom: 10px;
     border: 2px solid rgb(45, 153, 190);
   }
   .functions{
-    padding: 25px 0px 25px 25px;
+    padding: 1px 0px 25px 25px;
     width: 350px;
     display: table-column;
     justify-content: center;
@@ -392,7 +392,7 @@ margin-bottom: 10px;
   }
   .buttns{
     display: flex;
-    margin-top: 40px;
+    margin-top: -20px;
     margin-bottom: 20px;
     /* margin-left: -50px; */
     /* justify-content: space-around; */
@@ -503,33 +503,43 @@ margin-left: 20px;
   color: black;
 }
 .direct1{
-  margin: 20px 20px 30px 5px ;
-  height: 40px;
+  margin: 10px 20px 40px 5px ;
+  height: 50px;
   width: 90%;
 }
 
 .direct2{
-  height: 80%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
   border: 2px solid purple;
   border-radius: 1rem;
+  padding-bottom: 15px;
+  padding-right: 2px;
 
 }
 .directMove{
+  
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 2px solid black;
   position: relative;
-  margin-left: -70px;
+  margin-right: 30px;
+  /* margin-left: -70px; */
 }
 .span{
   position: absolute;
   margin-left: 30px;
-  width: 80px;
+  color: black;
+  font-weight: 600;
+  /* width: 80px; */
 }
 .directMove:hover{
   cursor: pointer;
+}
+.span1{
+  margin: 80px;
+  font-weight: 600;
 }

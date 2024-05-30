@@ -1,7 +1,7 @@
 import { ruleMove, screen } from "./rules.js";
 import { color,  hitted, player, square } from "./pieces.js";
 import { Undo } from "./rules.js";
-import { bulletSpeed } from "./bullet.js";
+import { bulletSpeed, movement } from "./bullet.js";
 import { checkCollision, interval2 } from "./collission.js";
 import { detector, pieces } from "./pieces.js"; 
 //   "Titan_blue"   ,"Tank_blue"  ,"Ricochets_blue"  ,"SemiRicochets_blue"  ,"Cannon_blue"  ,"Titan_pink"  ,"Tank_pink"  ,"Ricochets_pink"  ,"SemiRicochets_pink"  ,"Cannon_pink"
@@ -27,7 +27,7 @@ let hit=0;
 let hit_parent = "";
 // let path= ["up","right","down","left"];
 let test;
-let bullet_move="up";
+export let bullet_move="up";
 let clicked =false;
 let square1=square;
 square1 = square1.splice(0,5);
@@ -71,7 +71,7 @@ Array.from(squareTurn).forEach((sq) =>{
   sq.addEventListener("click", ahead )})
 }
 
-function ahead (e){
+export function ahead (e){
   if(clicked){
     unSelect();
   }
@@ -373,15 +373,24 @@ export function checkPause(){
   }
 }
 let interval10;
-let direct = [false,false];
+export let direct = [false,false,false,false];
 //directional move
 let tick = document.querySelectorAll(".directMove");
 Array.from(tick).forEach((tk) =>{
 tk.addEventListener("click", ()=> {
 
-  if(tk.id == "left1"){
+  if(tk.id =="left1"){
     document.querySelector("#right1").style.backgroundColor="initial";
     direct[1]=false;
+    document.querySelector("#left2").style.backgroundColor="initial";
+    direct[2]=false;
+     document.querySelector("#right2").style.backgroundColor="initial";
+      direct[3]=false;
+      if(!Turn){
+      bullet_move="down";}
+      else{
+        bullet_move="up";
+      }
   if(direct[0]){
     document.querySelector("#left1").style.backgroundColor="initial";
     direct[0]=false;
@@ -390,9 +399,18 @@ tk.addEventListener("click", ()=> {
   direct[0]=true;
   tk.style.backgroundColor = "blue";}}
 
-  else if(tk.id== "right1"){
+  else if(tk.id=="right1"){
     document.querySelector("#left1").style.backgroundColor="initial";
     direct[0]=false;
+    document.querySelector("#left2").style.backgroundColor="initial";
+    direct[2]=false;
+      document.querySelector("#right2").style.backgroundColor="initial";
+      direct[3]=false;
+      if(!Turn){
+      bullet_move="down";}
+      else{
+        bullet_move="up";
+      }
     if(direct[1]){
       document.querySelector("#right1").style.backgroundColor="initial";
     direct[1]=false;
@@ -400,6 +418,54 @@ tk.addEventListener("click", ()=> {
     else{
     direct[1]=true;
     tk.style.backgroundColor = "blue";}
+  }
+  else if (tk.id=="left2"){
+    document.querySelector("#right1").style.backgroundColor="initial";
+    direct[1]=false;
+    document.querySelector("#left1").style.backgroundColor="initial";
+    direct[0]=false;
+    document.querySelector("#right2").style.backgroundColor="initial";
+    direct[3]=false;
+    if(direct[2]){
+      document.querySelector("#left2").style.backgroundColor="initial";
+    direct[2]=false;
+    if(!Turn){
+      bullet_move="down";}
+      else{
+        bullet_move="up";
+      }
+    }
+    else{
+    direct[2]=true;
+    tk.style.backgroundColor = "blue";
+    bullet_move="left";
+    path_i=0;
+  }
+
+  }
+  else if(tk.id=="right2"){
+    document.querySelector("#left1").style.backgroundColor="initial";
+    direct[0]=false;
+    document.querySelector("#left2").style.backgroundColor="initial";
+    direct[2]=false;
+    document.querySelector("#right1").style.backgroundColor="initial";
+    direct[1]=false;
+    if(direct[3]){
+      document.querySelector("#right2").style.backgroundColor="initial";
+    direct[3]=false;
+    if(!Turn){
+    bullet_move="down";}
+    else{
+      bullet_move="up";
+    }
+    }
+    else{
+    direct[3]=true;
+    tk.style.backgroundColor = "blue";
+    bullet_move="right";
+    path_i=0;
+  }
+
   }
 
 })})
@@ -409,7 +475,19 @@ export function disabling(){
     direct[0]=false;
     document.querySelector("#right1").style.backgroundColor="initial";
     direct[1]=false;
-}
+    document.querySelector("#left2").style.backgroundColor="initial";
+    direct[2]=false;
+    document.querySelector("#right2").style.backgroundColor="initial";
+    direct[3]=false;
+    if(direct[2]){
+      document.querySelector("#left2").style.backgroundColor="initial";
+    direct[2]=false;
+    if(!Turn){
+      bullet_move="down";}
+      else{
+        bullet_move="up";
+      }
+}}
 
 export function checkDirecting(bullet){
   if(direct[0]){
@@ -423,5 +501,21 @@ export function checkDirecting(bullet){
       const currentLeft = parseInt(bullet.style.left);
       bullet.style.left = (currentLeft + bulletSpeed) + "px";
   }, 10);
+  }
+  else if(direct[2]){
+    interval10 = setInterval(() => {
+      const currentLeft = parseInt(bullet.style.left);
+      bullet.style.left = (currentLeft - bulletSpeed) + "px";
+  }, 10);
+  bullet_move="left";
+  path_i=0;
+  }
+  else if(direct[3]){
+    interval10 = setInterval(() => {
+      const currentLeft = parseInt(bullet.style.left);
+      bullet.style.left = (currentLeft + bulletSpeed) + "px";
+  }, 10);
+  bullet_move="right";
+  path_i=0;
   }
 }

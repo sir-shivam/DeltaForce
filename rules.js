@@ -1,5 +1,5 @@
 import { color, pieces, playerMoving} from "./pieces.js";
-import { checkPause, clock, intervaal8, interval7, interval9, lastSelect, pauseActive, play } from "./app.js";
+import { ahead, checkPause, clock, intervaal8, interval7, interval9, lastSelect, pauseActive, play } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -68,13 +68,30 @@ function showStep(Turn) {
         if((document.getElementById(positions[i]))!=null){    
             let act_box = ((document.getElementById(positions[i])));
             act_box.style.backgroundColor= "#C7F6C7";
-            if(!act_box.hasChildNodes()){
+            if(act_box.hasChildNodes()){
+                if(lastSelect[1]=="Ricochets"){
+                    // exchangeof position
+                    if(!act_box.querySelector("div").className.includes("Titan")){
+                        act_box.querySelector("div").removeEventListener("click", ahead )
+                        act_box.addEventListener("click", nextMove);
+                    }
+                }
+            }
+            else if(!act_box.hasChildNodes()){
             act_box.addEventListener("click" , nextMove ); }  // on click on the highlited box it will call nextMove 
         }
     }
 }
 
+
+
 function nextMove(){
+    let child= document.querySelector(`.${lastSelect[0]}`);
+    if(this.hasChildNodes()){
+        let parId = child.parentNode;
+        console.log(this.children[0]);
+        parId.appendChild(this.children[0]);
+    }
     checkPause();
     playerMoving();
     // screen();
@@ -84,7 +101,6 @@ function nextMove(){
     console.log(lastSelect[0]);
     clearInterval(interval7);
     clock.innerHTML="20";
-    let child= document.querySelector(`.${lastSelect[0]}`);
     this.appendChild(child);
     Shooting(Turn1);
     unSelect();
