@@ -98,7 +98,12 @@ export const unSelect = () =>{
   }
 
 play();
-counting(); 
+counting();
+
+let pause = document.querySelector(".pause");
+pauseActive=true;
+clearInterval(interval7); 
+pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
 
 export function comparing (bullet){
     ricoPosition();
@@ -120,35 +125,15 @@ export function comparing (bullet){
                     if( (detector[j].id=="left" || detector[j].id=="bottom")){
                     hit=0;
                     hitted();
-                    // path_i=0;
-                    //////console.log(detector[j].parentNode);
-                    // clearInterval(interval3);
-            // clearInterval(interval2);
-            // clearInterval(interval5);
-            // clearInterval(interval4);
+                    
             clearInterval(interval6);
-            // clearInterval(interval7);
             (detector[j].parentNode).style.background = "none";
-            // (detector[j].parentNode).appendChild(div1);
-            // (detector[j].parentNode).appendChild(div2);
-            // (detector[j].parentNode).appendChild(div3);
-            // (detector[j].parentNode).appendChild(div4);
             ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);
-            // bullet.parentNode.removeChild(bullet);
-            // delPlay();
-            // unSelect();
-            // transform();
-            // break;
                 }
                 }
                 else if((detector[j].parentNode.classList)[1]=="Tank"){
                   clearInterval(interval6);
                   hit=0;
-            // clearInterval(interval5);
-            // clearInterval(interval4);
-            // clearInterval(interval2);
-            // clearInterval(interval5);
-            // clearInterval(interval4);
             clearInterval(interval3);
             console.log("in takkkkkkkkkkkkk");
             detector[j].parentNode.classList.add("shivam");
@@ -158,8 +143,7 @@ export function comparing (bullet){
             break;
                 }
                 path_i=0;
-                clearTimeout(interval6);
-                //////console.log(path_i);
+                clearInterval(interval6);
                 nextDirection(detector[j]);
                 hit_parent = detector[j].parentNode; }
                 break;
@@ -176,12 +160,10 @@ export function comparing (bullet){
         if(test && hit==1){
             hitted();
             clearInterval(interval3);
-            clearInterval(interval2);
+            // clearInterval(interval2);
             clearInterval(interval4);
-            clearTimeout(interval6);
-            //////console.log("collide yahuuuu");
+            clearInterval(interval6);
             hit=0;
-            //////console.log(bullet.style.top);
             bullet.style.top = (RicoInfo[i].top + RicoInfo[i].bottom) /2 -10+ "px";
             bullet.style.left = (RicoInfo[i].left + RicoInfo[i].right ) /2 -5 +"px";
             moveDirection(bullet);
@@ -192,10 +174,6 @@ export function comparing (bullet){
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
           if(!Rico[i].className.includes("shivam")){
-            // //////console.log(RicoInfo[i]);
-            //////console.log("different part");
-            //////console.log(Rico[i]); 
-            //////console.log(bullet.style.top);
             clearInterval(interval3);
             clearInterval(interval2);
             clearInterval(interval5);
@@ -278,7 +256,6 @@ export function boundary(bullet){
             clearInterval(interval4);
             clearInterval(interval5);
             clearInterval(interval7);
-        ////console.log("out of box");
         bullet.parentNode.removeChild(bullet); 
         delPlay();
         transform();
@@ -303,7 +280,6 @@ line.addEventListener("click", ()=>{
     slide.style.marginLeft="-40%";
     slide.style.display="block";
     threeActive = true; 
-  // slide.style.transition = "display 2s ease-out"
   }
 })
 
@@ -323,7 +299,6 @@ export function counting(){
     }
   }, 500);
   interval9 =setInterval(() => {
-    ////console.log("changing");
     if(!Turn){
     col=true;
     clock.style.border=`4px solid ${color[1]}`
@@ -342,7 +317,6 @@ export function counting(){
     document.querySelector(".space").style.border=`3px solid ${color[0]}`;
     }
 }, 1000);
-// clock=document.querySelector(".clock");
 interval7 = setInterval(()=>{
   let time = clock.innerHTML;
   time=parseInt(time)-1;
@@ -364,7 +338,6 @@ interval7 = setInterval(()=>{
 }
 
 // pause function 
-let pause = document.querySelector(".pause");
 pause.addEventListener("click" , countdown);
 export function countdown(){
   if(!pauseActive){

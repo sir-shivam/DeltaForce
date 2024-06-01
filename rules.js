@@ -94,7 +94,6 @@ function nextMove(){
     }
     checkPause();
     playerMoving();
-    // screen();
     childParent[k]=this.id;
     rotating[k]=false;
     pieceId[k++]=lastSelect[0];
@@ -140,25 +139,19 @@ function action (){
     else if(lastSelect[0] == "Ricochets_blue"){
         m=3
     }
-    //console.log(val[m] , m , lastSelect);
     angleInitial[k]=val[m];
     console.log(angleInitial[k]);
     if(this.className=="right"){
         val[m]= parseInt(val[m]) + 90;
-        //console.log("lefting");
     }
     else{
-        //console.log("righting")
     val[m] = parseInt(val[m]) - 90;}
     angle[k++]=val[m];
     console.log(angle[k-1]);
     last.style.transform=`rotate(${val[m]}deg)`;
     playerMoving();
     Shooting(Turn1);
-    // (document.querySelector(".rotate")).style.display= "none";  //always hidden
     unSelect();
-    // play();
-    // transform();
 }
 
 let Un = document.querySelector(".undo");

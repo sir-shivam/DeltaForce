@@ -1,5 +1,5 @@
 
-import { delPlay, interval4, play, transform } from "./app.js";
+import { delPlay, intervaal8, interval4, interval6, interval7, interval9, play, transform } from "./app.js";
 import { movement } from "./bullet.js";
 import { interval3, interval5 } from "./app.js";
 import { hitted } from "./pieces.js";
@@ -28,12 +28,16 @@ function checkHit(bullet) {
 
 export  function checkCollision(bullet) {
     interval2 = setInterval( () => {
-      // console.log("titan checking");
   if (checkHit(bullet)) {
     clearInterval(interval2);
     clearInterval(interval3);
     clearInterval(interval5);
     clearInterval(interval4);
+    clearInterval(interval6);
+    clearInterval(interval7);
+    clearInterval(intervaal8);
+    clearInterval(interval9);
+
     hitted();
     bullet.parentNode.removeChild(bullet); 
     delPlay();
