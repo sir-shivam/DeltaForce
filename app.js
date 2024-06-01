@@ -125,13 +125,26 @@ export function comparing (bullet){
                     if( (detector[j].id=="left" || detector[j].id=="bottom")){
                     hit=0;
                     hitted();
-                    
+                    if(mode=="hacker"){
             clearInterval(interval6);
             (detector[j].parentNode).style.background = "none";
-            ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);
+            ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);}
+            else {
+              clearInterval(interval3);
+            clearInterval(interval2);
+            clearInterval(interval5);
+            clearInterval(interval4);
+            clearInterval(interval6);
+            clearInterval(interval7);
+            // hitted();
+            bullet.parentNode.removeChild(bullet);
+            unSelect();
+            delPlay();
+            transform();
+            }
                 }
                 }
-                else if((detector[j].parentNode.classList)[1]=="Tank"){
+                else if((detector[j].parentNode.classList)[1]=="Tank" && mode=="hacker"){
                   clearInterval(interval6);
                   hit=0;
             clearInterval(interval3);
@@ -139,7 +152,7 @@ export function comparing (bullet){
             detector[j].parentNode.classList.add("shivam");
             setTimeout(()=>{
               document.querySelector(".shivam").classList.remove("shivam");
-            },170);
+            },160);
             break;
                 }
                 path_i=0;
@@ -173,7 +186,7 @@ export function comparing (bullet){
             
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
-          if(!Rico[i].className.includes("shivam")){
+          if(!Rico[i].className.includes("shivam") && mode=="hacker"){
             clearInterval(interval3);
             clearInterval(interval2);
             clearInterval(interval5);
@@ -508,3 +521,56 @@ export function checkDirecting(bullet){
   path_i=0;
   }
 }
+
+let toggle = document.querySelector(".toggle");
+toggle.addEventListener("click" , toggling);
+
+    function toggling(){
+          toggle.style.transition = " transform 0.3s ease-in";
+          if(mode=="normal"){
+          toggle.style.transform = "translate(100%)";
+          mode="hacker";
+          nTh();
+      }
+      else{
+          toggle.style.transform = "translate(0%)";
+          mode="normal";
+          nTh();
+      }
+      }
+
+        export function nTh(){
+          // delPlay();
+      if(mode=="normal"){
+          document.querySelector(".history").style.display = "none";
+          document.querySelector(".display").style.display = "none";
+          document.querySelector(".direct1").style.display = "none";
+        }
+        else{
+          document.querySelector(".history").style.display = "block";
+          document.querySelector(".display").style.display = "block";
+          document.querySelector(".direct1").style.display = "block";
+          // auto();     //creating pieces
+        }
+        
+        for(let j=0 ,i=0 ; i<pieces.length ; i++){
+          let boxes = document.querySelector(`#box${player[i]}`);
+          let square5 = document.querySelector(`.${pieces[i]}`);
+          boxes.appendChild(square5);}
+        delPlay();
+        disabling();
+        Undo();
+        if(document.querySelector(".active")!=null  ){
+        document.querySelector(".active").classList.remove("active");}
+        Turn=true;
+        squareTurn = square;
+        path_i=0;
+        bullet_move ="up";
+        let time=20;
+        clock.innerHTML=time;
+        let pause = document.querySelector(".pause");
+        pauseActive=true;
+        clearInterval(interval7); 
+        pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
+        play();
+    }
