@@ -333,9 +333,6 @@ linear-gradient(to top right, red 50% , transparent 0%);
   
 
   @media(max-width: 576px){
-    nav{
-      /* width: 166vw;; */
-    }
     
     .functions{
       /* padding-top: 20px; */
@@ -673,7 +670,8 @@ margin-left: 20px;
 
 }
 .alert3{
-  width: 100%;
+  width: 80%;
+  margin-left: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -693,6 +691,22 @@ margin-left: 20px;
 }
 
 .alert0{
+  cursor: pointer;
+}
+.download0{
+  margin-left: 5%;
+  margin-top: -3%;
+  border-radius: 0.8rem;
+  height: auto;
+  width: 6rem;
+  border: 2px solid black;
+  /* display: flex; */
+}
+.download1{
+  height: 2rem;
+  font-size: 2rem;
+}
+.download0:hover{
   cursor: pointer;
 }
 

@@ -45,7 +45,7 @@ let squareTurn = square2;
 
 export function transform(){
   clearInterval(interval2);
-  checkCollision();
+  // checkCollision();
 if(Turn){
 
   squareTurn=square1;
@@ -70,6 +70,7 @@ else{
 }
 clearInterval(interval7);
 document.querySelector(".clock").innerHTML="20";
+clearInterval(interval7)
 counting();
 if(isNormal=="normal"){
   normal2();
@@ -77,6 +78,15 @@ if(isNormal=="normal"){
 }
 
 export function play(){
+if(Turn){
+  document.querySelector(".Titan_blue").classList.add("shiva");
+  document.querySelector(".Titan_pink").classList.remove("shiva");
+}
+else{
+  document.querySelector(".Titan_blue").classList.remove("shiva");
+  document.querySelector(".Titan_pink").classList.add("shiva");
+}
+  
 path_i=0;
 hit_parent="";
 Array.from(squareTurn).forEach((sq) =>{
@@ -147,7 +157,7 @@ export function comparing (bullet){
           else {
             clearInterval(interval3);
           clearInterval(interval2);
-          checkCollision();
+          // checkCollision();
           clearInterval(interval5);
           clearInterval(interval4);
           clearInterval(interval6);
@@ -200,20 +210,23 @@ export function comparing (bullet){
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
           if(!Rico[i].className.includes("shivam")){
+            if(!Rico[i].className.includes("shiva")){
             clearInterval(interval3);
             clearInterval(interval2);
-            checkCollision();
+            // checkCollision();
             clearInterval(interval5);
             clearInterval(interval4);
             clearInterval(interval6);
             clearInterval(interval7);
             clearInterval(interval10);
             hitted();
+            clearTimeout(0);
             bullet.parentNode.removeChild(bullet);
             unSelect();
             delPlay();
             transform();
             break;}
+          }
             }  } }
         }, 10);
 }
@@ -269,7 +282,7 @@ export function moveDirection (bullet){
      }
      path_i=0;
      comparing(bullet);
-     checkCollision(bullet);
+    //  checkCollision(bullet);
     }
 
 export function boundary(bullet){
@@ -288,7 +301,7 @@ export function boundary(bullet){
 
         bullet.parentNode.removeChild(bullet);
         clearInterval(interval2); 
-        checkCollision();
+        // checkCollision();
         delPlay();
         transform();
     }
@@ -320,6 +333,7 @@ line.addEventListener("click", ()=>{
 export function counting(){
   clearInterval(interval8);
   clearInterval(interval9);
+  clearInterval(interval7);
   interval8 = setInterval(() => {
     if(col){
       col=false;
@@ -354,6 +368,9 @@ interval7 = setInterval(()=>{
   time=parseInt(time)-1;
   if(time<0){
     clearInterval(interval7);
+    clearInterval(interval8);
+    clearInterval(interval9);
+    clearInterval(interval8);
     clock.innerHTML=time;
     if(Turn){
       alerts(true , "Blue");
@@ -384,6 +401,7 @@ export function countdown(){
     pauseActive=false;
     clearInterval(interval7);
     pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
+    clearInterval(interval7);
     counting();
   }
 }
@@ -393,6 +411,7 @@ export function checkPause(){
     pauseActive=false;
     clearInterval(interval7);
     pause.innerHTML=`<i class="fa-solid fa-pause"></i>`;
+    clearInterval(interval7);
     counting();
   }
 }
@@ -543,7 +562,7 @@ export function checkDirecting(bullet){
   path_i=0;
   }
   clearInterval(interval2);
-  checkCollision();
+  // checkCollision();
 }
 
 

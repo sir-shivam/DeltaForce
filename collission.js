@@ -8,18 +8,13 @@ export let interval2;
 let Titan;
 
 function checkHit(bullet) {
-  if (movement!="down"){
-    Titan = document.querySelector(".Titan_blue");
-  }
-  else{
-  Titan = document.querySelector(".Titan_pink");
-  }
+  Titan = document.querySelector(".shiva");
     const TitanInfo = Titan.getBoundingClientRect();
     const bulletInfo = bullet.getBoundingClientRect();
   
     // Check if bullet rectangle overlaps with enemy rectangle
     return (
-      bulletInfo.top < TitanInfo.bottom +10 && 
+      bulletInfo.top < TitanInfo.bottom  && 
       bulletInfo.right > TitanInfo.left &&   
       bulletInfo.bottom > TitanInfo.top &&   
       bulletInfo.left < TitanInfo.right     
@@ -38,6 +33,7 @@ export  function checkCollision(bullet) {
     clearInterval(interval8);
     clearInterval(interval9);
     hitted();
+    clearTimeout(0);
     bullet.parentNode.removeChild(bullet); 
     delPlay();
     if(Titan.className.includes("blue")){
@@ -48,7 +44,6 @@ export  function checkCollision(bullet) {
     alerts(false , "Blue");
     // alert("game over BLUE wins ");
   }
-    transform();
 
   }
 }, 10);

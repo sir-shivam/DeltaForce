@@ -265,6 +265,15 @@ document.querySelector(".alert0").addEventListener("click", ()=>{
     window.location.reload(true);
 })
 
+document.querySelector(".download0").addEventListener("click", ()=> {
+    const strg =JSON.stringify(stepArray);
+    localStorage.setItem("gameHistory", strg);
+    console.log("saved");
+
+        // const retrived =JSON.parse(localStorage.getItem("gameHistory"));
+        // console.log(retrived);
+})
+
 export function normal2 (){
     let b = k;
     while(b!=(k+20)){
