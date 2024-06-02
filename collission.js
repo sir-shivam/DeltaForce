@@ -19,7 +19,7 @@ function checkHit(bullet) {
   
     // Check if bullet rectangle overlaps with enemy rectangle
     return (
-      bulletInfo.top < TitanInfo.bottom && 
+      bulletInfo.top < TitanInfo.bottom +10 && 
       bulletInfo.right > TitanInfo.left &&   
       bulletInfo.bottom > TitanInfo.top &&   
       bulletInfo.left < TitanInfo.right     

@@ -1,4 +1,4 @@
-import { k, ruleMove, screen } from "./rules.js";
+import { isNormal, k, normal2, ruleMove, screen } from "./rules.js";
 import {  color,  hitted, player, reseting, square } from "./pieces.js";
 import { Undo } from "./rules.js";
 import { bulletSpeed, movement } from "./bullet.js";
@@ -45,6 +45,7 @@ let squareTurn = square2;
 
 export function transform(){
   clearInterval(interval2);
+  checkCollision();
 if(Turn){
 
   squareTurn=square1;
@@ -68,7 +69,11 @@ else{
   play();
 }
 clearInterval(interval7);
+document.querySelector(".clock").innerHTML="20";
 counting();
+if(isNormal=="normal"){
+  normal2();
+}
 }
 
 export function play(){
@@ -141,7 +146,8 @@ export function comparing (bullet){
           ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);}
           else {
             clearInterval(interval3);
-          // clearInterval(interval2);
+          clearInterval(interval2);
+          checkCollision();
           clearInterval(interval5);
           clearInterval(interval4);
           clearInterval(interval6);
@@ -195,7 +201,8 @@ export function comparing (bullet){
         if ((test && !Rico[i].className.includes("Rico") )){
           if(!Rico[i].className.includes("shivam")){
             clearInterval(interval3);
-            // clearInterval(interval2);
+            clearInterval(interval2);
+            checkCollision();
             clearInterval(interval5);
             clearInterval(interval4);
             clearInterval(interval6);
@@ -278,7 +285,10 @@ export function boundary(bullet){
             clearInterval(interval7);
             clearInterval(interval10);
             clearInterval(interval6);
-        bullet.parentNode.removeChild(bullet); 
+
+        bullet.parentNode.removeChild(bullet);
+        clearInterval(interval2); 
+        checkCollision();
         delPlay();
         transform();
     }
@@ -532,6 +542,8 @@ export function checkDirecting(bullet){
   bullet_move="right";
   path_i=0;
   }
+  clearInterval(interval2);
+  checkCollision();
 }
 
 
@@ -547,4 +559,11 @@ export function alerts(count , winner){
     document.querySelector(".alert3").innerText= `Game Over : ${winner} wins`;}
 
   document.querySelector(".alert1").style.display = "block";
+}
+
+export function normal(l){
+      deletedFlag[l]=null;
+      deletedPiece[l]=null;
+      deletedPost[l]=null;
+      delChild[l]=null;
 }

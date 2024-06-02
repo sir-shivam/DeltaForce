@@ -358,6 +358,8 @@ linear-gradient(to top right, red 50% , transparent 0%);
       backdrop-filter: blur(50px);
       background-image: linear-gradient(to top, #fbc2eb 0%, #a6c0fd 100%);
       margin-top: 734px;
+      overflow: auto;
+      scrollbar-width: thin;
     }
     .clock{
       height: 100px;
@@ -629,7 +631,11 @@ margin-left: 20px;
     margin-right: 80px;
   }
   nav{
-    width: 136vw;
+    width: 166vw;
+  }
+  .rotate{
+    margin-left: 40px;
+    margin-top: 720px;
   }
 }
 
@@ -688,4 +694,22 @@ margin-left: 20px;
 
 .alert0{
   cursor: pointer;
+}
+
+@media(max-width: 576px){
+  .alert1{
+    height: 300px;
+    width: 400px;
+    margin-left: 40%;
+
+  }
+  .alert2{
+    font-size: 60px;
+  }
+  .slide{
+    width: 320px;
+    z-index: 6;
+    height: 126vh;
+    border-radius: 2rem;
+  }
 }

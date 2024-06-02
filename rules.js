@@ -1,5 +1,5 @@
 import { color,  createRico,  pieces, playerMoving} from "./pieces.js";
-import { ahead, checkPause, clock, interval8, interval7, interval9, lastSelect, mode, pauseActive, play, deletedFlag, deletedPiece, deletedPost } from "./app.js";
+import { ahead, checkPause, clock, interval8, interval7, interval9, lastSelect, mode, pauseActive, play, deletedFlag, deletedPiece, deletedPost, normal } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -10,6 +10,7 @@ export let positions=[];
 let boxId=[];
 let pieceId=[];
 let angleInitial=[];
+let valoOfm=[];
 let angle=[];
 let rotating=[];
 export let k=0;
@@ -17,6 +18,7 @@ let childParent=[];
 let b_post;
 let Turn1;
 let val=[1440,1440,1440,1440];
+export let isNormal="normal";
 
 //called from app.js to show rule and posible move
 export function ruleMove (element , Turn ,e) {
@@ -94,6 +96,7 @@ function nextMove(){
     }
     checkPause();
     playerMoving();
+    isNormal="normal";
     childParent[k]=this.id;
     rotating[k]=false;
     pieceId[k++]=lastSelect[0];
@@ -137,6 +140,7 @@ function action (){
     else if(lastSelect[0] == "Ricochets_blue"){
         m=3
     }
+    valoOfm[k]=m;
     angleInitial[k]=val[m];
     if(this.className=="right"){
         val[m]= parseInt(val[m]) + 90;
@@ -157,59 +161,87 @@ Rd.addEventListener("click",RedoMain);
 
 function UndoMain() {
     if(k>0){
-    if(rotating[k-1]){
-        let child= document.querySelector(`.${pieceId[--k]}`);
+        isNormal="undo";
+        --k;
+        if(deletedFlag[k]){
+            createRico(deletedPiece[k] , deletedPost[k]);
+        }
+     if(rotating[k]){
+        console.log("rotatied",angleInitial);
+        let child= document.querySelector(`.${pieceId[k]}`);
         childParent[k] = child.parentElement.id;
-        child.style.transform = `rotate(${angleInitial}deg)`;
+        child.style.transform = `rotate(${angleInitial[k]}deg)`;
+        val[valoOfm]=angleInitial[k];
+
     }
-    else{
-    let child= document.querySelector(`.${pieceId[--k]}`);
+    else {
+    let child= document.querySelector(`.${pieceId[k]}`);
     childParent[k] = child.parentElement.id;
     (document.querySelector(`#${boxId[k]}`)).appendChild(child);}
-    if(deletedFlag[k]){
-        createRico(deletedPiece[k] , deletedPost[k]);
-    }
-    clock.innerHTML="20";
+    
     clearInterval(interval8);
     clearInterval(interval9);
     clearInterval(interval7);
     delPlay();
+    // clock.innerHTML="20";
     transform();}
 }
 function RedoMain() {
     if(childParent[k]!=null ){
+        isNormal="redo";
     if(rotating[k]){
         let child= document.querySelector(`.${pieceId[k]}`);
         child.style.transform=`rotate(${angle[k]}deg)`;
+        val[valoOfm]=angle[k];
     }
     else {let child= document.querySelector(`.${pieceId[k]}`);
-    (document.querySelector(`#${childParent[k++]}`)).appendChild(child);
+    (document.querySelector(`#${childParent[k]}`)).appendChild(child);
     }
 
     if(deletedFlag[k]){
         document.querySelector(`.${deletedPiece[k]}`).remove();
     }
+    k++;
   clearInterval(interval8);
   clearInterval(interval9);
   clearInterval(interval7);
-  clock.innerHTML="20";
   delPlay();
     transform();}
 }
-
+let stepArray=[];
+let step=0;
 export function screen(){
     if(mode=="hacker"){
+        let alpha=k;
+        if(isNormal=="normal"){alpha=alpha-1;}
+        else if(isNormal=="redo"){alpha=alpha-1;}
     let d1 = document.createElement("div");
     d1.classList.add("d1");
     let d2 = document.createElement("div");
     d2.classList.add("d2");
-    d2.innerHTML=pieceId[k-1];
+    d2.innerHTML=pieceId[alpha];
+    stepArray[step++]=pieceId[alpha];
     let d3 = document.createElement("div");
     d3.classList.add("d3");
-    d3.innerText=boxId[k-1];
+    if(isNormal=="undo"){
+        d3.innerText=childParent[alpha];
+        stepArray[step++]=childParent[alpha];
+    }
+    else{
+        d3.innerText=boxId[alpha];
+        stepArray[step++]=boxId[alpha];
+        
+    }
     let d4 = document.createElement("div");
     d4.classList.add("d4");
-    d4.innerText=childParent[k-1];
+    if(isNormal=="undo"){
+        d4.innerText=boxId[alpha];
+        stepArray[step++]=boxId[alpha];
+    }
+    else{
+        d4.innerText=childParent[alpha];
+        stepArray[step++]=childParent[alpha];
+    }
     d1.appendChild(d2);
     d1.appendChild(d3);
     d1.appendChild(d4);
@@ -230,5 +262,19 @@ val=[1440,1440,1440,1440];
 
 document.querySelector(".alert0").addEventListener("click", ()=>{
     document.querySelector(".alert1").style.display="none";
-    resetAll();
+    window.location.reload(true);
 })
+
+export function normal2 (){
+    let b = k;
+    while(b!=(k+20)){
+    console.log("heloo");
+    childParent[b]=null;
+    rotating[b]=null;
+    pieceId[b]=null;
+    angleInitial[b]=null;
+    angle[b]=null;
+    normal(b);
+    b++;
+    }
+}
