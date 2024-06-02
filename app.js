@@ -1,5 +1,5 @@
-import { ruleMove, screen } from "./rules.js";
-import { color,  hitted, player, square } from "./pieces.js";
+import { k, ruleMove, screen } from "./rules.js";
+import {  color,  hitted, player, reseting, square } from "./pieces.js";
 import { Undo } from "./rules.js";
 import { bulletSpeed, movement } from "./bullet.js";
 import { checkCollision, interval2 } from "./collission.js";
@@ -11,8 +11,11 @@ export let interval3;
 export let lastSelect;
 export let col=false;
 export let interval7;
-export let intervaal8,interval9;
-
+export let interval8,interval9;
+export let deletedFlag=[];
+export let deletedPiece=[];
+export let deletedPost=[];
+export let delChild=[];
 export let interval5;
 export let interval6;
 export let Turn = true ;
@@ -28,19 +31,25 @@ let hit=0;
 let hit_parent = "";
 let test;
 let clicked =false;
-let square1=square;
+const square2=[];
+
+for(let x=0 ; x < square.length ; x++){
+  square2[x]=square[x];
+}
+
+
+export let square1=square2;
 square1 = square1.splice(0,5);
-let squareTurn = square;
+let squareTurn = square2;
 
 
 export function transform(){
+  clearInterval(interval2);
 if(Turn){
 
   squareTurn=square1;
   Turn=false;
-  //////console.log(bullet_move);
-  bullet_move ="down";
-  //////console.log(bullet_move);
+  bullet_move ="down"; 
   path_i=0;
   document.querySelector(".space").innerHTML=color[1];
   screen();
@@ -49,17 +58,16 @@ if(Turn){
 }
 
 else{
-  squareTurn=square;
+  squareTurn=square2;
   Turn=true;
-  //////console.log(bullet_move);
   bullet_move="up";
-  //////console.log(bullet_move);
   path_i=0;
   document.querySelector(".space").innerHTML=color[0];
   screen();
   disabling();
   play();
 }
+clearInterval(interval7);
 counting();
 }
 
@@ -117,49 +125,49 @@ export function comparing (bullet){
             bullInfo.left < detectorInfo[j].right );
         
             if(test2 ){
-                //////console.log("hitting rico");
-                if(hit_parent=="" || hit_parent!=detector[j].parentNode){
-                  //////console.log(detector[j].id);
-                  hit=1;
-                  if((detector[j].parentNode.classList)[1]=="Ricochets"){
-                    if( (detector[j].id=="left" || detector[j].id=="bottom")){
-                    hit=0;
-                    hitted();
-                    if(mode=="hacker"){
-            clearInterval(interval6);
-            (detector[j].parentNode).style.background = "none";
-            ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);}
-            else {
-              clearInterval(interval3);
-            clearInterval(interval2);
-            clearInterval(interval5);
-            clearInterval(interval4);
-            clearInterval(interval6);
-            clearInterval(interval7);
-            // hitted();
-            bullet.parentNode.removeChild(bullet);
-            unSelect();
-            delPlay();
-            transform();
-            }
-                }
-                }
-                else if((detector[j].parentNode.classList)[1]=="Tank" && mode=="hacker"){
-                  clearInterval(interval6);
+              if(hit_parent=="" || hit_parent!=detector[j].parentNode){
+                hit=1;
+                if((detector[j].parentNode.classList)[1]=="Ricochets"){
+                  if( (detector[j].id=="left" || detector[j].id=="bottom")){
                   hit=0;
+                  hitted();
+                  if(mode=="hacker"){
+                    deletedFlag[k-1]=true;
+                    deletedPiece[k-1]=(detector[j].parentNode).classList[0];
+                    deletedPost[k-1]=(detector[j].parentNode).parentNode.id;
+                    delChild[k-1]=(detector[j].parentNode).children;
+          clearInterval(interval6);
+          // (detector[j].parentNode).style.background = "none";
+          ((detector[j].parentNode).parentNode).removeChild(detector[j].parentNode);}
+          else {
             clearInterval(interval3);
-            console.log("in takkkkkkkkkkkkk");
-            detector[j].parentNode.classList.add("shivam");
-            setTimeout(()=>{
-              document.querySelector(".shivam").classList.remove("shivam");
-            },160);
-            break;
-                }
-                path_i=0;
+          // clearInterval(interval2);
+          clearInterval(interval5);
+          clearInterval(interval4);
+          clearInterval(interval6);
+          clearInterval(interval7);
+          bullet.parentNode.removeChild(bullet);
+          unSelect();
+          delPlay();
+          transform();
+          }
+              }
+              }
+              else if((detector[j].parentNode.classList)[1]=="Tank" && mode=="hacker"){
                 clearInterval(interval6);
-                nextDirection(detector[j]);
-                hit_parent = detector[j].parentNode; }
-                break;
+                hit=0;
+          clearInterval(interval3);
+          detector[j].parentNode.classList.add("shivam");
+          setTimeout(()=>{
+            document.querySelector(".shivam").classList.remove("shivam");
+          },160);
+          break;
+              }
+              path_i=0;
+              clearInterval(interval6);
+              nextDirection(detector[j]);
+              hit_parent = detector[j].parentNode; 
+              break;}
             }  }   }, 10);
     
     interval3 = setInterval(()=>{
@@ -173,7 +181,6 @@ export function comparing (bullet){
         if(test && hit==1){
             hitted();
             clearInterval(interval3);
-            // clearInterval(interval2);
             clearInterval(interval4);
             clearInterval(interval6);
             hit=0;
@@ -186,13 +193,14 @@ export function comparing (bullet){
             
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
-          if(!Rico[i].className.includes("shivam") && mode=="hacker"){
+          if(!Rico[i].className.includes("shivam")){
             clearInterval(interval3);
-            clearInterval(interval2);
+            // clearInterval(interval2);
             clearInterval(interval5);
             clearInterval(interval4);
             clearInterval(interval6);
             clearInterval(interval7);
+            clearInterval(interval10);
             hitted();
             bullet.parentNode.removeChild(bullet);
             unSelect();
@@ -242,7 +250,6 @@ export function moveDirection (bullet){
          const currentTop = parseInt(bullet.style.top);
          bullet.style.top = (currentTop - bulletSpeed) + "px";
         }, 10);
-        
      }
      
      else if ((path_i===0  && bullet_move === "down") || (bullet_move ==="left" && path_i<0) || (bullet_move ==="right" &&path_i>0)){
@@ -264,11 +271,13 @@ export function boundary(bullet){
          let bulletBound = bullet.getBoundingClientRect();
     if (bulletBound.top<board.top || bulletBound.top > board.bottom ||bulletBound.left <board.left || bulletBound.left >board.right) {
 
-            clearInterval(interval2);
+            // clearInterval(interval2);
             clearInterval(interval3);
             clearInterval(interval4);
             clearInterval(interval5);
             clearInterval(interval7);
+            clearInterval(interval10);
+            clearInterval(interval6);
         bullet.parentNode.removeChild(bullet); 
         delPlay();
         transform();
@@ -299,9 +308,9 @@ line.addEventListener("click", ()=>{
 // timer
 
 export function counting(){
-  clearInterval(intervaal8);
+  clearInterval(interval8);
   clearInterval(interval9);
-  intervaal8 = setInterval(() => {
+  interval8 = setInterval(() => {
     if(col){
       col=false;
       clock.style.color="white";
@@ -337,9 +346,12 @@ interval7 = setInterval(()=>{
     clearInterval(interval7);
     clock.innerHTML=time;
     if(Turn){
-    alert("other party BLUE  wins");}
+      alerts(true , "Blue");
+    // alert("other party BLUE  wins");
+  }
     else{
-      alert("other party PINK  wins");
+      alerts(true , "Pink");
+      // alert("other party PINK  wins");
     }
     time=20;
     clock.innerHTML=time;
@@ -522,55 +534,17 @@ export function checkDirecting(bullet){
   }
 }
 
-let toggle = document.querySelector(".toggle");
-toggle.addEventListener("click" , toggling);
 
-    function toggling(){
-          toggle.style.transition = " transform 0.3s ease-in";
-          if(mode=="normal"){
-          toggle.style.transform = "translate(100%)";
-          mode="hacker";
-          nTh();
-      }
-      else{
-          toggle.style.transform = "translate(0%)";
-          mode="normal";
-          nTh();
-      }
-      }
+// create alert
+export function alerts(count , winner){
+  if(count){
+      // alert1.appendChild(document.querySelector(".alert2"));
+      document.querySelector(".alert3").innerText=`Player ${winner} wins`;
+      document.querySelector(".alert2").innerText="Time Out";
+  }
+  else{
+    document.querySelector(".alert2").innerText="Winner";
+    document.querySelector(".alert3").innerText= `Game Over : ${winner} wins`;}
 
-        export function nTh(){
-          // delPlay();
-      if(mode=="normal"){
-          document.querySelector(".history").style.display = "none";
-          document.querySelector(".display").style.display = "none";
-          document.querySelector(".direct1").style.display = "none";
-        }
-        else{
-          document.querySelector(".history").style.display = "block";
-          document.querySelector(".display").style.display = "block";
-          document.querySelector(".direct1").style.display = "block";
-          // auto();     //creating pieces
-        }
-        
-        for(let j=0 ,i=0 ; i<pieces.length ; i++){
-          let boxes = document.querySelector(`#box${player[i]}`);
-          let square5 = document.querySelector(`.${pieces[i]}`);
-          boxes.appendChild(square5);}
-        delPlay();
-        disabling();
-        Undo();
-        if(document.querySelector(".active")!=null  ){
-        document.querySelector(".active").classList.remove("active");}
-        Turn=true;
-        squareTurn = square;
-        path_i=0;
-        bullet_move ="up";
-        let time=20;
-        clock.innerHTML=time;
-        let pause = document.querySelector(".pause");
-        pauseActive=true;
-        clearInterval(interval7); 
-        pause.innerHTML=`<i class="fa-solid fa-play"></i>`;
-        play();
-    }
+  document.querySelector(".alert1").style.display = "block";
+}

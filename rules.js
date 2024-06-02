@@ -1,5 +1,5 @@
-import { color, pieces, playerMoving} from "./pieces.js";
-import { ahead, checkPause, clock, intervaal8, interval7, interval9, lastSelect, pauseActive, play } from "./app.js";
+import { color,  createRico,  pieces, playerMoving} from "./pieces.js";
+import { ahead, checkPause, clock, interval8, interval7, interval9, lastSelect, mode, pauseActive, play, deletedFlag, deletedPiece, deletedPost } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -12,7 +12,7 @@ let pieceId=[];
 let angleInitial=[];
 let angle=[];
 let rotating=[];
-let k=0;
+export let k=0;
 let childParent=[];
 let b_post;
 let Turn1;
@@ -23,7 +23,6 @@ export function ruleMove (element , Turn ,e) {
     if(element[1]=== "Titan" || element[1]=== "Tank" || element[1]=== "Ricochets" || element[1]=== "SemiRicochets" || element[1]=== "Cannon" ) {
         let parentId = (document.querySelector(`.${element[0]}`)).parentElement.id;
         boxId[k] = parentId;
-        console.log(boxId[k]);
         parentId=parentId.slice(3,6);
         if(element[1] === "Cannon"){
             b_post=[1,-1];
@@ -69,11 +68,13 @@ function showStep(Turn) {
             let act_box = ((document.getElementById(positions[i])));
             act_box.style.backgroundColor= "#C7F6C7";
             if(act_box.hasChildNodes()){
-                if(lastSelect[1]=="Ricochets"){
-                    // exchangeof position
-                    if(!act_box.querySelector("div").className.includes("Titan") || !act_box.querySelector("div").className.includes("Cannon")  ){
+                if(lastSelect[1]=="Ricochets" && mode=="hacker"){
+                    // exchange of position
+                    if(!act_box.querySelector("div").className.includes("Titan") ){
+                        if(!act_box.querySelector("div").className.includes("Cannon")){
                         act_box.querySelector("div").removeEventListener("click", ahead )
                         act_box.addEventListener("click", nextMove);
+                        }
                     }
                 }
             }
@@ -89,7 +90,6 @@ function nextMove(){
     let child= document.querySelector(`.${lastSelect[0]}`);
     if(this.hasChildNodes()){
         let parId = child.parentNode;
-        console.log(this.children[0]);
         parId.appendChild(this.children[0]);
     }
     checkPause();
@@ -97,7 +97,6 @@ function nextMove(){
     childParent[k]=this.id;
     rotating[k]=false;
     pieceId[k++]=lastSelect[0];
-    console.log(lastSelect[0]);
     clearInterval(interval7);
     clock.innerHTML="20";
     this.appendChild(child);
@@ -123,7 +122,6 @@ function rotate() {
 
 function action (){
     pieceId[k] = lastSelect[0];
-    console.log(pieceId[k]);
     rotating[k]=true;
     let last= document.querySelector(`.${lastSelect[0]}`);
     let m;
@@ -140,14 +138,12 @@ function action (){
         m=3
     }
     angleInitial[k]=val[m];
-    console.log(angleInitial[k]);
     if(this.className=="right"){
         val[m]= parseInt(val[m]) + 90;
     }
     else{
     val[m] = parseInt(val[m]) - 90;}
     angle[k++]=val[m];
-    console.log(angle[k-1]);
     last.style.transform=`rotate(${val[m]}deg)`;
     playerMoving();
     Shooting(Turn1);
@@ -170,8 +166,11 @@ function UndoMain() {
     let child= document.querySelector(`.${pieceId[--k]}`);
     childParent[k] = child.parentElement.id;
     (document.querySelector(`#${boxId[k]}`)).appendChild(child);}
+    if(deletedFlag[k]){
+        createRico(deletedPiece[k] , deletedPost[k]);
+    }
     clock.innerHTML="20";
-    clearInterval(intervaal8);
+    clearInterval(interval8);
     clearInterval(interval9);
     clearInterval(interval7);
     delPlay();
@@ -186,7 +185,11 @@ function RedoMain() {
     else {let child= document.querySelector(`.${pieceId[k]}`);
     (document.querySelector(`#${childParent[k++]}`)).appendChild(child);
     }
-  clearInterval(intervaal8);
+
+    if(deletedFlag[k]){
+        document.querySelector(`.${deletedPiece[k]}`).remove();
+    }
+  clearInterval(interval8);
   clearInterval(interval9);
   clearInterval(interval7);
   clock.innerHTML="20";
@@ -195,6 +198,7 @@ function RedoMain() {
 }
 
 export function screen(){
+    if(mode=="hacker"){
     let d1 = document.createElement("div");
     d1.classList.add("d1");
     let d2 = document.createElement("div");
@@ -211,3 +215,20 @@ export function screen(){
     d1.appendChild(d4);
     (document.querySelector(".display")).appendChild(d1);
 }
+}
+
+export function resetAll2(){
+boxId=[];
+pieceId=[];
+angleInitial=[];
+angle=[];
+rotating=[];
+k=0;
+childParent=[];
+val=[1440,1440,1440,1440];
+} 
+
+document.querySelector(".alert0").addEventListener("click", ()=>{
+    document.querySelector(".alert1").style.display="none";
+    resetAll();
+})

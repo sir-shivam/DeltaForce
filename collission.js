@@ -1,5 +1,5 @@
 
-import { delPlay, intervaal8, interval4, interval6, interval7, interval9, play, transform } from "./app.js";
+import { delPlay, interval8, interval4, interval6, interval7, interval9, play, transform, alerts } from "./app.js";
 import { movement } from "./bullet.js";
 import { interval3, interval5 } from "./app.js";
 import { hitted } from "./pieces.js";
@@ -35,16 +35,19 @@ export  function checkCollision(bullet) {
     clearInterval(interval4);
     clearInterval(interval6);
     clearInterval(interval7);
-    clearInterval(intervaal8);
+    clearInterval(interval8);
     clearInterval(interval9);
-
     hitted();
     bullet.parentNode.removeChild(bullet); 
     delPlay();
     if(Titan.className.includes("blue")){
-    alert("game over PINK wins ");}
-    else{
-      alert("game over BLUE wins ");}
+    // alert("game over PINK wins ");
+    alerts(false , "Pink");
+  }
+  else{
+    alerts(false , "Blue");
+    // alert("game over BLUE wins ");
+  }
     transform();
 
   }
