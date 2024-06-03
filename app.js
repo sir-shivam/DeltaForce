@@ -256,7 +256,7 @@ function nextDirection (e , f){
     }
     else if (direct[1]){
       if(f.bottom - f.top > 10){
-        bullet_move="left";
+        bullet_move="right";
       }
       else{
         if(Turn){
