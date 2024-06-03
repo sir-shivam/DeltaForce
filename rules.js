@@ -90,6 +90,7 @@ function showStep(Turn) {
 let exchange=[];
 
 function nextMove(){
+    delPlay();
     let child= document.querySelector(`.${lastSelect[0]}`);
     if(this.hasChildNodes()){
         exchange[k]=true;
@@ -126,6 +127,7 @@ function rotate() {
 }
 
 function action (){
+    isNormal="normal";
     pieceId[k] = lastSelect[0];
     rotating[k]=true;
     let last= document.querySelector(`.${lastSelect[0]}`);
@@ -174,7 +176,6 @@ function UndoMain() {
         childParent[k] = child.parentElement.id;
         child.style.transform = `rotate(${angleInitial[k]}deg)`;
         val[valoOfm[k]]=angleInitial[k];
-
     }
     else {
         let child= document.querySelector(`.${pieceId[k]}`);
@@ -192,6 +193,7 @@ function UndoMain() {
     delPlay();
     transform();}
 }
+
 function RedoMain() {
     if(childParent[k]!=null ){
         isNormal="redo";

@@ -68,8 +68,11 @@ else{
 
 clearInterval(interval7);
 document.querySelector(".clock").innerHTML="20";
-clearInterval(interval7)
+clearInterval(interval7);
 counting();
+if(pauseActive){
+  clearInterval(interval7);
+  }
 if(isNormal=="normal"){
   normal2();
 }
