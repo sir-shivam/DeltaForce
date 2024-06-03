@@ -178,7 +178,7 @@ export function comparing (bullet){
               }
               path_i=0;
               clearInterval(interval6);
-              nextDirection(detector[j]);
+              nextDirection(detector[j],detectorInfo[j]);
               hit_parent = detector[j].parentNode; 
               break;}
             }  }   }, 10);
@@ -237,7 +237,33 @@ export function ricoPosition(){
 }
 
 
-function nextDirection (e){ 
+function nextDirection (e , f){ 
+    if(direct[0]){
+      if( f.bottom - f.top > 10){
+        bullet_move="left";
+      }
+      else{
+        if(Turn){
+        bullet_move="up";
+        }
+        else{
+          bullet_move="down";
+        }
+      }
+    }
+    else if (direct[1]){
+      if(f.bottom - f.top > 10){
+        bullet_move="left";
+      }
+      else{
+        if(Turn){
+        bullet_move="up";
+        }
+        else{
+          bullet_move="down";
+        }
+      }
+    }
     if((e.id)===("right")){ path_i++}
     else if((e.id)===("left")){ path_i++}
     else if((e.id)===("top")){path_i--}
