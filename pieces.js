@@ -6,6 +6,7 @@ export let square=[];
 export let pieces=[];
 export let detector=[];
 let j=0;
+
 const sound1 = new Audio("./sound/movesound.mp3");
 const hit1 = new Audio("./sound/hit.mp3");
 sound1.preload="auto";
@@ -72,20 +73,7 @@ for(let j=0, i=0 ; i<arr.length ; i++){
     }
     }
 
-export function create(){
-for(let i=0 ; i<arr.length ; i++){
-    let boxes = document.querySelector(`#box${player[i]}`);
-    square[i].style.transform = "rotate(1440deg)";
-    boxes.appendChild(square[i]);
-}
-}
-
-
-
-
-
 //creating extra Richochits
-let a=19;
 export function createRico(classes , boxno){
     if(classes.includes("pink")){
         document.querySelector(`#${boxno}`).appendChild(square[7]);
@@ -95,8 +83,7 @@ export function createRico(classes , boxno){
 } 
 }
 
-
-    // reset function
+// reset function
 let reset = document.querySelector(".reset");
 reset.addEventListener("click", reseting);
     

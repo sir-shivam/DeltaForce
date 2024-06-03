@@ -1,11 +1,10 @@
-import { bullet_move, checkDirecting, direct, moveDirection } from "./app.js";
-import { interval2 } from "./collission.js";
+import { checkDirecting, direct, moveDirection } from "./app.js";
 import { checkCollision } from "./collission.js";
 import { boundary, comparing } from "./app.js";
 
 export let movement;
-let container;
 export const bulletSpeed = 5; 
+let container;
 
 
 // creating bullet as element

@@ -1,9 +1,7 @@
 
-import { delPlay, interval8, interval4, interval6, interval7, interval9, play, transform, alerts } from "./app.js";
-import { movement } from "./bullet.js";
+import { delPlay, interval8, interval4, interval6, interval7, interval9,  alerts } from "./app.js";
 import { interval3, interval5 } from "./app.js";
 import { hitted } from "./pieces.js";
-// import { comparing } from "./direction.js";
 export let interval2;
 let Titan;
 
@@ -11,8 +9,6 @@ function checkHit(bullet) {
   Titan = document.querySelector(".shiva");
     const TitanInfo = Titan.getBoundingClientRect();
     const bulletInfo = bullet.getBoundingClientRect();
-  
-    // Check if bullet rectangle overlaps with enemy rectangle
     return (
       bulletInfo.top < TitanInfo.bottom  && 
       bulletInfo.right > TitanInfo.left &&   

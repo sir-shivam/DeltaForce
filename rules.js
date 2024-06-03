@@ -1,5 +1,5 @@
-import { color,  createRico,  pieces, playerMoving} from "./pieces.js";
-import { ahead, checkPause, clock, interval8, interval7, interval9, lastSelect, mode, pauseActive, play, deletedFlag, deletedPiece, deletedPost, normal } from "./app.js";
+import { createRico, playerMoving} from "./pieces.js";
+import { ahead, checkPause, clock, interval8, interval7, interval9, lastSelect, mode, deletedFlag, deletedPiece, deletedPost, normal } from "./app.js";
 import { unSelect } from "./app.js";
 import { Shooting } from "./bullet.js";
 import { transform } from "./app.js";
@@ -7,18 +7,18 @@ import { delPlay } from "./app.js";
 
 
 export let positions=[];
+export let k=0;
+export let isNormal="normal";
 let boxId=[];
 let pieceId=[];
 let angleInitial=[];
 let valoOfm=[];
 let angle=[];
 let rotating=[];
-export let k=0;
 let childParent=[];
 let b_post;
 let Turn1;
 let val=[1440,1440,1440,1440];
-export let isNormal="normal";
 
 //called from app.js to show rule and posible move
 export function ruleMove (element , Turn ,e) {

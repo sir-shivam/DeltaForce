@@ -1,8 +1,8 @@
 import { isNormal, k, normal2, ruleMove, screen } from "./rules.js";
-import {  color,  hitted, player, reseting, square } from "./pieces.js";
+import {  color,  hitted,  square } from "./pieces.js";
 import { Undo } from "./rules.js";
-import { bulletSpeed, movement } from "./bullet.js";
-import { checkCollision, interval2 } from "./collission.js";
+import { bulletSpeed} from "./bullet.js";
+import { interval2 } from "./collission.js";
 import { detector, pieces } from "./pieces.js"; 
 //   "Titan_blue"   ,"Tank_blue"  ,"Ricochets_blue"  ,"SemiRicochets_blue"  ,"Cannon_blue"  ,"Titan_pink"  ,"Tank_pink"  ,"Ricochets_pink"  ,"SemiRicochets_pink"  ,"Cannon_pink"
 export let mode="hacker";
@@ -37,17 +37,14 @@ for(let x=0 ; x < square.length ; x++){
   square2[x]=square[x];
 }
 
-
 export let square1=square2;
 square1 = square1.splice(0,5);
 let squareTurn = square2;
-
 
 export function transform(){
   clearInterval(interval2);
   // checkCollision();
 if(Turn){
-
   squareTurn=square1;
   Turn=false;
   bullet_move ="down"; 
@@ -68,6 +65,7 @@ else{
   disabling();
   play();
 }
+
 clearInterval(interval7);
 document.querySelector(".clock").innerHTML="20";
 clearInterval(interval7)
@@ -102,7 +100,6 @@ export function ahead (e){
   lastSelect=`${e.target.className}`;
   lastSelect= lastSelect.split(" ");        //lastselect contains the target class
   e.target.classList.add("active");
-  
   ruleMove(lastSelect ,Turn , e);
 }
 
@@ -206,7 +203,6 @@ export function comparing (bullet){
             break; 
             }
 
-            
         else if(Rico[i]!=null){
         if ((test && !Rico[i].className.includes("Rico") )){
           if(!Rico[i].className.includes("shivam")){
@@ -277,8 +273,7 @@ export function moveDirection (bullet){
      interval4 = setInterval(() => {
          const currentTop = parseInt(bullet.style.top);
          bullet.style.top = (currentTop + bulletSpeed) + "px";
-        }, 10);
-        
+        }, 10);  
      }
      path_i=0;
      comparing(bullet);
@@ -329,7 +324,6 @@ line.addEventListener("click", ()=>{
 })
 
 // timer
-
 export function counting(){
   clearInterval(interval8);
   clearInterval(interval9);
