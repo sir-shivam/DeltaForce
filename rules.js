@@ -224,7 +224,11 @@ export function screen(){
     let d3 = document.createElement("div");
     d3.classList.add("d3");
     if(isNormal=="undo"){
-        d3.innerText=childParent[alpha];
+        if(rotating[alpha]){
+            d3.innerText=angleInitial[alpha]%360;
+        }
+        else{
+        d3.innerText=childParent[alpha];}
         stepArray[step++]=childParent[alpha];
     }
     else{
@@ -239,7 +243,11 @@ export function screen(){
         stepArray[step++]=boxId[alpha];
     }
     else{
-        d4.innerText=childParent[alpha];
+        if(rotating[alpha]){
+            d4.innerText=angle[alpha]%360;
+        }
+        else{
+        d4.innerText=childParent[alpha];}
         stepArray[step++]=childParent[alpha];
     }
     d1.appendChild(d2);

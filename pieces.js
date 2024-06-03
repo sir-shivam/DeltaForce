@@ -1,7 +1,7 @@
 
 export let arr = ["Titan","Tank","Ricochets","SemiRicochets","Cannon","Titan","Tank","Ricochets","SemiRicochets","Cannon"];
 export let color=["pink" , "blue"];
-export let player=[32,27,11,19,4,59,20,16,64,60];
+export let player=[7,29,23,1,5,58,36,42,64,60];
 export let square=[];
 export let pieces=[];
 export let detector=[];
