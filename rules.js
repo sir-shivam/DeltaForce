@@ -169,11 +169,11 @@ function UndoMain() {
             createRico(deletedPiece[k] , deletedPost[k]);
         }
      if(rotating[k]){
-        console.log("rotatied",angleInitial);
+        // console.log("rotatied",angleInitial);
         let child= document.querySelector(`.${pieceId[k]}`);
         childParent[k] = child.parentElement.id;
         child.style.transform = `rotate(${angleInitial[k]}deg)`;
-        val[valoOfm]=angleInitial[k];
+        val[valoOfm[k]]=angleInitial[k];
 
     }
     else {
@@ -190,7 +190,6 @@ function UndoMain() {
     clearInterval(interval9);
     clearInterval(interval7);
     delPlay();
-    // clock.innerHTML="20";
     transform();}
 }
 function RedoMain() {
@@ -199,7 +198,7 @@ function RedoMain() {
     if(rotating[k]){
         let child= document.querySelector(`.${pieceId[k]}`);
         child.style.transform=`rotate(${angle[k]}deg)`;
-        val[valoOfm]=angle[k];
+        val[valoOfm[k]]=angle[k];
     }
     else {let child= document.querySelector(`.${pieceId[k]}`);
     if(exchange[k]){
