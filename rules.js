@@ -68,29 +68,31 @@ function showStep(Turn) {
     for(let i =0 ; i<positions.length ; i++){                //posiontions is array of all posible steps
         if((document.getElementById(positions[i]))!=null){    
             let act_box = ((document.getElementById(positions[i])));
-            act_box.style.backgroundColor= "#C7F6C7";
             if(act_box.hasChildNodes()){
                 if(lastSelect[1]=="Ricochets" && mode=="hacker"){
                     // exchange of position
                     if(!act_box.querySelector("div").className.includes("Titan") ){
                         if(!act_box.querySelector("div").className.includes("Cannon")){
-                        act_box.querySelector("div").removeEventListener("click", ahead )
-                        act_box.addEventListener("click", nextMove);
+                            act_box.querySelector("div").removeEventListener("click", ahead )
+                            act_box.addEventListener("click", nextMove);
+                            act_box.style.backgroundColor= "#C7F6C7";
                         }
                     }
                 }
             }
             else if(!act_box.hasChildNodes()){
+                act_box.style.backgroundColor= "#C7F6C7";
             act_box.addEventListener("click" , nextMove ); }  // on click on the highlited box it will call nextMove 
         }
     }
 }
 
-
+let exchange=[];
 
 function nextMove(){
     let child= document.querySelector(`.${lastSelect[0]}`);
     if(this.hasChildNodes()){
+        exchange[k]=true;
         let parId = child.parentNode;
         parId.appendChild(this.children[0]);
     }
@@ -175,9 +177,14 @@ function UndoMain() {
 
     }
     else {
-    let child= document.querySelector(`.${pieceId[k]}`);
+        let child= document.querySelector(`.${pieceId[k]}`);
+        if(exchange[k]){
+            child.parentNode.appendChild((document.querySelector(`#${boxId[k]}`)).children[0]);
+        }
     childParent[k] = child.parentElement.id;
     (document.querySelector(`#${boxId[k]}`)).appendChild(child);}
+
+    
     
     clearInterval(interval8);
     clearInterval(interval9);
@@ -195,6 +202,9 @@ function RedoMain() {
         val[valoOfm]=angle[k];
     }
     else {let child= document.querySelector(`.${pieceId[k]}`);
+    if(exchange[k]){
+        child.parentNode.appendChild((document.querySelector(`#${childParent[k]}`)).children[0]);
+    }
     (document.querySelector(`#${childParent[k]}`)).appendChild(child);
     }
 
@@ -291,6 +301,7 @@ export function normal2 (){
     pieceId[b]=null;
     angleInitial[b]=null;
     angle[b]=null;
+    exchange[b]=null;
     normal(b);
     b++;
     }
