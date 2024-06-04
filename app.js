@@ -241,7 +241,8 @@ export function ricoPosition(){
 
 
 function nextDirection (e , f){ 
-    if(direct[0]){
+    if(direct[0] && isOf){
+      isOf=false;
       if( f.bottom - f.top > 10){
         bullet_move="left";
       }
@@ -254,7 +255,8 @@ function nextDirection (e , f){
         }
       }
     }
-    else if (direct[1]){
+    else if (direct[1] && isOf){
+      isOf=false;
       if(f.bottom - f.top > 10){
         bullet_move="right";
       }
@@ -439,6 +441,7 @@ export function checkPause(){
   }
 }
 let interval10;
+let isOf;
 export let direct = [false,false,false,false];
 //directional move
 let tick = document.querySelectorAll(".directMove");
@@ -463,6 +466,7 @@ tk.addEventListener("click", ()=> {
   }
   else{
   direct[0]=true;
+  isOf=true;
   tk.style.backgroundColor = "blue";}}
 
   else if(tk.id=="right1"){
@@ -483,6 +487,7 @@ tk.addEventListener("click", ()=> {
     }
     else{
     direct[1]=true;
+    isOf=true;
     tk.style.backgroundColor = "blue";}
   }
   else if (tk.id=="left2"){
